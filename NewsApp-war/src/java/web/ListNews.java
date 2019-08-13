@@ -8,6 +8,8 @@ package web;
 import ejb.NewsEntity;
 import ejb.NewsEntityFacade;
 import ejb.SessionManagerBean;
+import ejb.User;
+import ejb.UserFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -26,9 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name="ListNews", urlPatterns={"/ListNews"})
 public class ListNews extends HttpServlet {
     @EJB
+    private UserFacade userFacade;
+    @EJB
     private SessionManagerBean sessionManagerBean;
     @EJB
     private NewsEntityFacade newsEntityFacade;
+    
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -50,13 +55,14 @@ public class ListNews extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath () + "</h1>");
 
-            List news = newsEntityFacade.findAll();
+            // List news = newsEntityFacade.findAll();
+            List news = userFacade.findAll();
 for (Iterator it = news.iterator(); it.hasNext();) {
-    NewsEntity elem = (NewsEntity) it.next();
-    out.println(" <b>"+elem.getTitle()+" </b><br />");
-    out.println(elem.getBody()+"<br /> ");
+    User elem = (User) it.next();
+    out.println(" <b>"+elem.getLogin()+" </b><br />");
+    out.println(elem.getPassword()+"<br /> ");
 }
-out.println("<a href='PostMessage'>Add new message</a>");
+out.println("<a href='PostMessage'>Add new user</a>");
 
 out.println("<br><br>");
 out.println(sessionManagerBean.getActiveSessionsCount() + " user(s) reading the news.");

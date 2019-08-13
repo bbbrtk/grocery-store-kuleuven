@@ -5,6 +5,7 @@
 package web;
 
 import ejb.NewsEntity;
+import ejb.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
@@ -55,9 +56,9 @@ public class PostMessage extends HttpServlet {
 
                 ObjectMessage message = session.createObjectMessage();
                 // here we create NewsEntity, that will be sent in JMS message
-                NewsEntity e = new NewsEntity();
-                e.setTitle(title);
-                e.setBody(body);
+                User e = new User();
+                e.setLogin(title);
+                e.setPassword(body);
 
                 message.setObject(e);
                 messageProducer.send(message);

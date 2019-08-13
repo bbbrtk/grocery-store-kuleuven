@@ -5,6 +5,9 @@
     <jta-data-source>jdbc/sample</jta-data-source>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
+       <!--<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:mapping_entities_db;create=true"/>
+   
     </properties>
   </persistence-unit>
 </persistence>
