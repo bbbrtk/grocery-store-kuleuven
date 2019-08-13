@@ -26,17 +26,17 @@ public class Basket implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-//    @ManyToOne
-//    @JoinColumn(name = "user_fk")
-//    private User myUser;
-//
-//    public User getMyUser() {
-//        return myUser;
-//    }
-//
-//    public void setMyUser(User myUser) {
-//        this.myUser = myUser;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "user_fk")
+    private User myUser;
+
+    public User getMyUser() {
+        return myUser;
+    }
+
+    public void setMyUser(User myUser) {
+        this.myUser = myUser;
+    }
     
     
 

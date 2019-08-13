@@ -30,8 +30,8 @@ public class User implements Serializable {
     private String password;
     private Double money;
     
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "baskets", orphanRemoval = true)
-//    private List<Basket> listOfMyBaskets;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Basket> listOfMyBaskets;
 
     public String getLogin() {
         return login;
