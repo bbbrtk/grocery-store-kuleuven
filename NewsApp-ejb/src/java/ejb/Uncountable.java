@@ -5,65 +5,54 @@
  */
 package ejb;
 
+import ejb.enumeration.Unit;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
  * @author Bartek
  */
 @Entity
-@Table(name = "baskets")
-public class Basket implements Serializable {
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-    
-    @Column
-    private String name;
-    
-    @OneToMany(mappedBy = "basket")
-    private List<Item> listOfMyItems;
-    
+@DiscriminatorValue("Uncountable")
+public class Uncountable extends Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Unit unit;
+    
+    @Column
+    private Double pricePerWeight;
 
-    public User getUser() {
-        return user;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
-    public String getName() {
-        return name;
+
+    public Double getPricePerWeight() {
+        return pricePerWeight;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPricePerWeight(Double pricePerWeight) {
+        this.pricePerWeight = pricePerWeight;
     }
-
-    public List<Item> getListOfMyItems() {
-        return listOfMyItems;
-    }
-
-    public void setListOfMyItems(List<Item> listOfMyItems) {
-        this.listOfMyItems = listOfMyItems;
-    }    
+    
+    
 
     public Long getId() {
         return id;
@@ -83,10 +72,10 @@ public class Basket implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Basket)) {
+        if (!(object instanceof Uncountable)) {
             return false;
         }
-        Basket other = (Basket) object;
+        Uncountable other = (Uncountable) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +84,7 @@ public class Basket implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.Basket[ id=" + id + " ]";
+        return "ejb.Uncountable[ id=" + id + " ]";
     }
     
 }

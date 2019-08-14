@@ -7,64 +7,29 @@ package ejb;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Bartek
  */
 @Entity
-@Table(name = "baskets")
-public class Basket implements Serializable {
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-    
-    @Column
-    private String name;
-    
-    @OneToMany(mappedBy = "basket")
-    private List<Item> listOfMyItems;
-    
+public class BankAccount implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Item> getListOfMyItems() {
-        return listOfMyItems;
-    }
-
-    public void setListOfMyItems(List<Item> listOfMyItems) {
-        this.listOfMyItems = listOfMyItems;
-    }    
-
+    
+    private String bankName;
+    private Double money;
+    
+    @ManyToMany(mappedBy = "bankAccounts")
+    private List<User> listOfUsers;
+    
     public Long getId() {
         return id;
     }
@@ -73,6 +38,31 @@ public class Basket implements Serializable {
         this.id = id;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
+    }
+
+    public List<User> getListOfUsers() {
+        return listOfUsers;
+    }
+
+    public void setListOfUsers(List<User> listOfUsers) {
+        this.listOfUsers = listOfUsers;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -83,10 +73,10 @@ public class Basket implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Basket)) {
+        if (!(object instanceof BankAccount)) {
             return false;
         }
-        Basket other = (Basket) object;
+        BankAccount other = (BankAccount) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +85,7 @@ public class Basket implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.Basket[ id=" + id + " ]";
+        return "ejb.BankAccount[ id=" + id + " ]";
     }
     
 }

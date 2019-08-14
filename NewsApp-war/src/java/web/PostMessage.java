@@ -4,6 +4,7 @@
  */
 package web;
 
+import ejb.BankAccount;
 import ejb.Basket;
 import ejb.NewsEntity;
 import ejb.User;
@@ -58,16 +59,33 @@ public class PostMessage extends HttpServlet {
                 MessageProducer messageProducer = session.createProducer(queue);
 
                 ObjectMessage message = session.createObjectMessage();
-                // here we create NewsEntity, that will be sent in JMS message
+                
+                // basket
                 Basket basket = new Basket();
                 List<Basket> list = new ArrayList();
                 list.add(basket);
+                basket.setName("MainBasket");
                 
+                
+                //bank account
+                BankAccount bankAccount = new BankAccount();
+                List<BankAccount> listBank = new ArrayList();
+                listBank.add(bankAccount);                
+                bankAccount.setBankName("ING");
+                
+                //user
                 User e = new User();
+                List<User> listUser = new ArrayList();
+                listUser.add(e);    
                 e.setLogin(title);
                 e.setPassword(body);
+                
                 e.setListOfMyBaskets(list);
                 basket.setUser(e);
+                
+                e.setBankAccounts(listBank);
+                bankAccount.setListOfUsers(listUser);
+                
                 
                 message.setObject(e);
                 messageProducer.send(message);

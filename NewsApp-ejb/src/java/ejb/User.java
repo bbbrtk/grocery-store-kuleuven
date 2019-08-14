@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_account")
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +37,16 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Basket> listOfMyBaskets;
+    
+    @ManyToMany(cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(
+        name = "user_bankAccount", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "bankAccount_id"))
+    private List<BankAccount> bankAccounts;
 
     public List<Basket> getListOfMyBaskets() {
         return listOfMyBaskets;
@@ -40,6 +54,14 @@ public class User implements Serializable {
 
     public void setListOfMyBaskets(List<Basket> listOfMyBaskets) {
         this.listOfMyBaskets = listOfMyBaskets;
+    }
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
     
     
