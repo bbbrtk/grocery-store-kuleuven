@@ -7,6 +7,7 @@ package ejb;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,22 +22,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "baskets")
 public class Basket implements Serializable {
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
-    @ManyToOne
-    @JoinColumn(name = "user_fk")
-    private User myUser;
-
-    public User getMyUser() {
-        return myUser;
-    }
-
-    public void setMyUser(User myUser) {
-        this.myUser = myUser;
-    }
     
     
 

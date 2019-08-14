@@ -4,10 +4,13 @@
  */
 package web;
 
+import ejb.Basket;
 import ejb.NewsEntity;
 import ejb.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -56,10 +59,16 @@ public class PostMessage extends HttpServlet {
 
                 ObjectMessage message = session.createObjectMessage();
                 // here we create NewsEntity, that will be sent in JMS message
+                Basket basket = new Basket();
+                List<Basket> list = new ArrayList();
+                list.add(basket);
+                
                 User e = new User();
                 e.setLogin(title);
                 e.setPassword(body);
-
+                e.setListOfMyBaskets(list);
+                basket.setUser(e);
+                
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
