@@ -7,6 +7,7 @@ package web.msg;
 
 import ejb.BankAccount;
 import ejb.Basket;
+import ejb.BasketFacade;
 import ejb.ManageStatefulBean;
 import ejb.User;
 import ejb.UserFacade;
@@ -44,9 +45,11 @@ public class BasketMsg extends HttpServlet {
 
     @EJB
     private ManageStatefulBean msb;
-    
-        @EJB
+
+    @EJB
     private UserFacade userFacade;
+    
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

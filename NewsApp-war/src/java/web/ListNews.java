@@ -4,6 +4,8 @@
  */
 package web;
 
+import ejb.Basket;
+import ejb.BasketFacade;
 import ejb.NewsEntity;
 import ejb.NewsEntityFacade;
 import ejb.ManageStatefulBean;
@@ -38,6 +40,8 @@ public class ListNews extends HttpServlet {
     @EJB
     private UserFacade userFacade;
     @EJB
+    private BasketFacade basketFacade;
+    @EJB
     private ManageStatefulBean msb;
     @EJB
     private NewsEntityFacade newsEntityFacade;
@@ -62,22 +66,36 @@ public class ListNews extends HttpServlet {
             out.println("<title>Servlet ListNews</title>");
             out.println("</head>");
             out.println("<body>");
+            
+            // USER INFO
             out.println("<h1>user: " + msb.getCurrentUserLogin() + "</h1>");
             out.println("<h1>ID: " + msb.getCurrentUser().getId() + "</h1>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath() + "</h1>");
 
-            // List news = newsEntityFacade.findAll();
-            List news = userFacade.findAll();
-            for (Iterator it = news.iterator(); it.hasNext();) {
-                User elem = (User) it.next();
-                out.println(" <b>" + elem.getLogin() + " </b><br />");
-                out.println(elem.getPassword() + "<br /> ");
-            }
+            // BUTTONS
             out.println("<a href='userCreate.html'>Add new user</a>");
             out.println("<br><br>");
             out.println("<a href='basketCreate.html'>Add new basket</a>");
 
+            // USERS
+            out.println("<h1>USERS</h1>");
+            List users = userFacade.findAll();
+            for (Iterator it = users.iterator(); it.hasNext();) {
+                User elem = (User) it.next();
+                out.println(" <b>" + elem.getLogin() + " -- " + elem.getPassword() + " </b><br />");
+            }
             out.println("<br><br>");
+
+            // BASKETS
+            out.println("<h1>BASKETS</h1>");
+            List baskets = basketFacade.findAll();
+            for (Iterator it = baskets.iterator(); it.hasNext();) {
+                Basket elem = (Basket) it.next();
+                out.println(" <b>" + elem.getName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+            
+            // SESSION
             out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
 
             out.println("</body>");
@@ -125,7 +143,5 @@ public class ListNews extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
 
 }
