@@ -4,10 +4,9 @@
  */
 package web;
 
-import ejb.ManageBeanLocal;
 import ejb.NewsEntity;
 import ejb.NewsEntityFacade;
-import ejb.SessionManagerBean;
+import ejb.ManageStatefulBean;
 import ejb.User;
 import ejb.UserFacade;
 import ejb.session.ManagementStatefulBean;
@@ -35,20 +34,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ListNews", urlPatterns = {"/ListNews"})
 public class ListNews extends HttpServlet {
-    
-//    ManageBeanLocal msb = lookupManageBeanLocal();
 
-//    ManagementStatefulBeanLocal managementStatefulBean = lookupManagementStatefulBeanLocal();
     @EJB
     private UserFacade userFacade;
     @EJB
-    private SessionManagerBean sessionManagerBean;
+    private ManageStatefulBean msb;
     @EJB
     private NewsEntityFacade newsEntityFacade;
-    
-    @Inject
-    ManageBeanLocal msb;
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,7 +62,8 @@ public class ListNews extends HttpServlet {
             out.println("<title>Servlet ListNews</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>user: " + sessionManagerBean.getCurrentUser() + "</h1>");
+            out.println("<h1>user: " + msb.getCurrentUserLogin() + "</h1>");
+            out.println("<h1>ID: " + msb.getCurrentUser().getId() + "</h1>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath() + "</h1>");
 
             // List news = newsEntityFacade.findAll();
@@ -80,10 +73,12 @@ public class ListNews extends HttpServlet {
                 out.println(" <b>" + elem.getLogin() + " </b><br />");
                 out.println(elem.getPassword() + "<br /> ");
             }
-            out.println("<a href='PostMessage'>Add new user</a>");
+            out.println("<a href='userCreate.html'>Add new user</a>");
+            out.println("<br><br>");
+            out.println("<a href='basketCreate.html'>Add new basket</a>");
 
             out.println("<br><br>");
-            out.println(sessionManagerBean.getActiveSessionsCount() + " user(s) reading the news.");
+            out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
 
             out.println("</body>");
             out.println("</html>");
@@ -132,14 +127,5 @@ public class ListNews extends HttpServlet {
     }// </editor-fold>
 
 
-    private ManageBeanLocal lookupManageBeanLocal() {
-        try {
-            Context c = new InitialContext();
-            return (ManageBeanLocal) c.lookup("java:global/NewsApp/NewsApp-war/ManageBean!ejb.ManageBeanLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 
 }

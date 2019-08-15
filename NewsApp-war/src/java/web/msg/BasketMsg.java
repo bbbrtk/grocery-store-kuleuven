@@ -7,9 +7,16 @@ package web.msg;
 
 import ejb.BankAccount;
 import ejb.Basket;
+import ejb.ManageStatefulBean;
+import ejb.User;
+import ejb.UserFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -34,6 +41,12 @@ public class BasketMsg extends HttpServlet {
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
+
+    @EJB
+    private ManageStatefulBean msb;
+    
+        @EJB
+    private UserFacade userFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,13 +73,30 @@ public class BasketMsg extends HttpServlet {
                 ObjectMessage message = session.createObjectMessage();
 
                 //bank account
+                String userLogin = msb.getCurrentUserLogin();
+
                 Basket e = new Basket();
                 e.setName(name);
+                List<Basket> list = new ArrayList();
+                list.add(e);
+
+                List users = userFacade.findAll();
+                for (Iterator it = users.iterator(); it.hasNext();) {
+                    User elem = (User) it.next();
+                    if (elem.getLogin().equals(userLogin)) {
+                        e.setUser(elem);
+                        elem.setListOfMyBaskets(list);
+                        break;
+                    }
+                }
 
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
+
+                msb.storeBasketData(name);
+
                 response.sendRedirect("ListNews");
 
             } catch (JMSException ex) {

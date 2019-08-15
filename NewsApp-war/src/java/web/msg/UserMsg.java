@@ -7,8 +7,7 @@ package web.msg;
 
 import ejb.BankAccount;
 import ejb.ItemFacade;
-import ejb.ManageBeanLocal;
-import ejb.SessionManagerBean;
+import ejb.ManageStatefulBean;
 import ejb.User;
 import ejb.UserFacade;
 import ejb.session.ManagementStatefulBean;
@@ -43,19 +42,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "UserMsg", urlPatterns = {"/UserMsg"})
 public class UserMsg extends HttpServlet {
-//    ManageBeanLocal msb = lookupManageBeanLocal();
 
-//    ManagementStatefulBeanLocal managementStatefulBean = lookupManagementStatefulBeanLocal();
     @Resource(mappedName = "jms/NewMessageFactory")
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
 
-    @Inject
-    ManageBeanLocal msb;
-
     @EJB
-    private SessionManagerBean sessionManagerBean;
+    private ManageStatefulBean msb;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,14 +80,14 @@ public class UserMsg extends HttpServlet {
                 e.setLogin(login);
                 e.setPassword(password);
 
-                sessionManagerBean.storeUserData(login, password);
-//                List news = userFacade.findAll();
-
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
-//                response.sendRedirect("ListNews");
+
+                msb.storeUserData(login);
+
+                response.sendRedirect("ListNews");
 
             } catch (JMSException ex) {
                 ex.printStackTrace();
@@ -108,7 +102,7 @@ public class UserMsg extends HttpServlet {
             out.println("<title>Servlet UserMsg</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>user: " + sessionManagerBean.getCurrentUser() + "</h1>");
+//            out.println("<h1>user: " + msb.getCurrentUser() + "</h1>");
             out.println("<h1>Servlet UserMsg at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
@@ -155,15 +149,5 @@ public class UserMsg extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private ManageBeanLocal lookupManageBeanLocal() {
-        try {
-            Context c = new InitialContext();
-            return (ManageBeanLocal) c.lookup("java:global/NewsApp/NewsApp-war/ManageBean!ejb.ManageBeanLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 
 }
