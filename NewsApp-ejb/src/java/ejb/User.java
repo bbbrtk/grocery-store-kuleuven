@@ -32,7 +32,6 @@ public class User implements Serializable {
     private Long id;
     private String login;
     private String password;
-    private Double money;
     
 
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, orphanRemoval=true)
@@ -80,14 +79,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Double getMoney() {
-        return money;
-    }
-
-    public void setMoney(Double money) {
-        this.money = money;
     }
 
     public Long getId() {

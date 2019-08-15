@@ -41,7 +41,30 @@ public class UserMessage implements MessageListener {
     try {
         if (message instanceof ObjectMessage) {
             msg = (ObjectMessage) message;
-            User e = (User) msg.getObject();
+            Object e;
+            
+            if (msg.getObject().getClass() == new User().getClass()){
+                e = (User) msg.getObject();
+            }
+            else if(msg.getObject().getClass() == new Item().getClass()){
+                e = (Item) msg.getObject();
+            }
+            else if(msg.getObject().getClass() == new Countable().getClass()){
+                e = (Countable) msg.getObject();
+            }
+            else if(msg.getObject().getClass() == new Uncountable().getClass()){
+                e = (Uncountable) msg.getObject();
+            }            
+            else if(msg.getObject().getClass() == new Basket().getClass()){
+                e = (Basket) msg.getObject();
+            }
+            else if(msg.getObject().getClass() == new BankAccount().getClass()){
+                e = (BankAccount) msg.getObject();
+            }            
+            else{
+                e = (NewsEntity) msg.getObject();
+            }
+
             save(e);
         }
     } catch (JMSException e) {

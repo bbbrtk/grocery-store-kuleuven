@@ -10,8 +10,8 @@ package ejb.enumeration;
  * @author Bartek
  */
 public enum Unit {
+
     KG,
     DAG,
-    POUND,
-    OUNCE
+    POUND
 }
