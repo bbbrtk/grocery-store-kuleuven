@@ -4,6 +4,8 @@
  */
 package web;
 
+import ejb.BankAccount;
+import ejb.BankAccountFacade;
 import ejb.Basket;
 import ejb.BasketFacade;
 import ejb.NewsEntity;
@@ -41,6 +43,9 @@ public class ListNews extends HttpServlet {
     private UserFacade userFacade;
     @EJB
     private BasketFacade basketFacade;
+    
+    @EJB
+    private BankAccountFacade bankAccountFacade;
     @EJB
     private ManageStatefulBean msb;
     @EJB
@@ -66,7 +71,7 @@ public class ListNews extends HttpServlet {
             out.println("<title>Servlet ListNews</title>");
             out.println("</head>");
             out.println("<body>");
-            
+
             // USER INFO
             out.println("<h1>user: " + msb.getCurrentUserLogin() + "</h1>");
             out.println("<h1>ID: " + msb.getCurrentUser().getId() + "</h1>");
@@ -76,13 +81,15 @@ public class ListNews extends HttpServlet {
             out.println("<a href='userCreate.html'>Add new user</a>");
             out.println("<br><br>");
             out.println("<a href='basketCreate.html'>Add new basket</a>");
+            out.println("<br><br>");
+            out.println("<a href='bankAccountCreate.html'>Add new BankAccount</a>");
 
             // USERS
             out.println("<h1>USERS</h1>");
             List users = userFacade.findAll();
             for (Iterator it = users.iterator(); it.hasNext();) {
                 User elem = (User) it.next();
-                out.println(" <b>" + elem.getLogin() + " -- " + elem.getPassword() + " </b><br />");
+                out.println(" <b>" + elem.getLogin() + " -- " + elem.getPassword() + " -- " + elem.getId() +  " </b><br />");
             }
             out.println("<br><br>");
 
@@ -95,6 +102,15 @@ public class ListNews extends HttpServlet {
             }
             out.println("<br><br>");
             
+                        // BANKS
+            out.println("<h1>BANKS</h1>");
+            List banks = bankAccountFacade.findAll();
+            for (Iterator it = banks.iterator(); it.hasNext();) {
+                BankAccount elem = (BankAccount) it.next();
+                out.println(" <b>" + elem.getBankName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
             // SESSION
             out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
 

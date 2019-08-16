@@ -80,15 +80,12 @@ public class BasketMsg extends HttpServlet {
 
                 Basket e = new Basket();
                 e.setName(name);
-                List<Basket> list = new ArrayList();
-                list.add(e);
 
                 List users = userFacade.findAll();
                 for (Iterator it = users.iterator(); it.hasNext();) {
                     User elem = (User) it.next();
                     if (elem.getLogin().equals(userLogin)) {
                         e.setUser(elem);
-                        elem.setListOfMyBaskets(list);
                         break;
                     }
                 }
