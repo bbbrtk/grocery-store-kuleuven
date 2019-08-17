@@ -77,7 +77,6 @@ public class BasketMsg extends HttpServlet {
                 e.setName(name);
                 e.setUser(msb.getCurrentUser());
 
-
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();

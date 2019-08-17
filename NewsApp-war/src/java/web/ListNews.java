@@ -51,7 +51,7 @@ public class ListNews extends HttpServlet {
     private BankAccountFacade bankAccountFacade;
 
     @EJB
-    private ManageStatefulBean msb;
+    private ManagementStatefulBeanLocal msb;
 
     @EJB
     private NewsEntityFacade newsEntityFacade;
@@ -78,7 +78,7 @@ public class ListNews extends HttpServlet {
             out.println("<body>");
 
             // USER INFO
-            out.println("<h1>user: " + msb.getCurrentUserLogin() + "</h1>");
+            out.println("<h1>user: " + msb.getCurrentUser().getLogin() + "</h1>");
             out.println("<h1>ID: " + msb.getCurrentUser().getId() + "</h1>");
             out.println("<h1>Servlet ListNews at " + request.getContextPath() + "</h1>");
 
@@ -132,7 +132,7 @@ public class ListNews extends HttpServlet {
             out.println("<br><br>");
 
             // SESSION
-            out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
+//            out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
 
             out.println("</body>");
             out.println("</html>");
