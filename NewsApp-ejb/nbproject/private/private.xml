@@ -5,8 +5,6 @@
         <group>
             <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/User.java</file>
             <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/UserMessage.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/session/ManagementStatefulBeanLocal.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/session/ManagementStatefulBean.java</file>
         </group>
     </open-files>
 </project-private>
