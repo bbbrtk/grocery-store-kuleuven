@@ -2,19 +2,32 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package web;
 
+import ejb.BankAccount;
+import ejb.BankAccountFacade;
+import ejb.Basket;
+import ejb.BasketFacade;
+import ejb.Item;
+import ejb.ItemFacade;
 import ejb.NewsEntity;
 import ejb.NewsEntityFacade;
-import ejb.SessionManagerBean;
+import ejb.ManageStatefulBean;
 import ejb.User;
 import ejb.UserFacade;
+import ejb.session.ManagementStatefulBean;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,59 +38,113 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nb
  */
-@WebServlet(name="ListNews", urlPatterns={"/ListNews"})
+@WebServlet(name = "ListNews", urlPatterns = {"/ListNews"})
 public class ListNews extends HttpServlet {
+
     @EJB
     private UserFacade userFacade;
     @EJB
-    private SessionManagerBean sessionManagerBean;
+    private BasketFacade basketFacade;
+    @EJB
+    private ItemFacade itemFacade;
+    @EJB
+    private BankAccountFacade bankAccountFacade;
+
+    @EJB
+    private ManageStatefulBean msb;
+
     @EJB
     private NewsEntityFacade newsEntityFacade;
-    
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListNews</title>");  
+            out.println("<title>Servlet ListNews</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListNews at " + request.getContextPath () + "</h1>");
 
-            // List news = newsEntityFacade.findAll();
-            List news = userFacade.findAll();
-for (Iterator it = news.iterator(); it.hasNext();) {
-    User elem = (User) it.next();
-    out.println(" <b>"+elem.getLogin()+" </b><br />");
-    out.println(elem.getPassword()+"<br /> ");
-}
-out.println("<a href='PostMessage'>Add new user</a>");
+            // USER INFO
+            out.println("<h1>user: " + msb.getCurrentUserLogin() + "</h1>");
+            out.println("<h1>ID: " + msb.getCurrentUser().getId() + "</h1>");
+            out.println("<h1>Servlet ListNews at " + request.getContextPath() + "</h1>");
 
-out.println("<br><br>");
-out.println(sessionManagerBean.getActiveSessionsCount() + " user(s) reading the news.");
+            // BUTTONS
+            out.println("<a href='userCreate.html'>Add new user</a>");
+            out.println("<br><br>");
+            out.println("<a href='basketCreate.html'>Add new basket</a>");
+            out.println("<br><br>");
+            out.println("<a href='bankAccountCreate.html'>Add new BankAccount</a>");
+            out.println("<br><br>");
+            out.println("<a href='setUserBank.html'>Set account to user</a>");
+            out.println("<br><br>");
+            out.println("<a href='countableCreate.html'>Add new Countable</a>");
+            out.println("<br><br>");
+            out.println("<a href='uncountableCreate.html'>Add new UNcountable</a>");
 
+            // USERS
+            out.println("<h1>USERS</h1>");
+            List users = userFacade.findAll();
+            for (Iterator it = users.iterator(); it.hasNext();) {
+                User elem = (User) it.next();
+                out.println(" <b>" + elem.getLogin() + " -- " + elem.getPassword() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
+            // BASKETS
+            out.println("<h1>BASKETS</h1>");
+            List baskets = basketFacade.findAll();
+            for (Iterator it = baskets.iterator(); it.hasNext();) {
+                Basket elem = (Basket) it.next();
+                out.println(" <b>" + elem.getName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
+            // BANKS
+            out.println("<h1>BANKS</h1>");
+            List banks = bankAccountFacade.findAll();
+            for (Iterator it = banks.iterator(); it.hasNext();) {
+                BankAccount elem = (BankAccount) it.next();
+                out.println(" <b>" + elem.getBankName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
+            // ITEMS
+            out.println("<h1>ITEMS</h1>");
+            List items = itemFacade.findAll();
+            for (Iterator it = items.iterator(); it.hasNext();) {
+                Item elem = (Item) it.next();
+                out.println(" <b>" + elem.getName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
+            // SESSION
+            out.println(msb.getActiveSessionsCount() + " user(s) reading the news.");
 
             out.println("</body>");
             out.println("</html>");
-        } finally { 
+        } finally {
             out.close();
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,12 +152,13 @@ out.println(sessionManagerBean.getActiveSessionsCount() + " user(s) reading the 
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -98,12 +166,13 @@ out.println(sessionManagerBean.getActiveSessionsCount() + " user(s) reading the 
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

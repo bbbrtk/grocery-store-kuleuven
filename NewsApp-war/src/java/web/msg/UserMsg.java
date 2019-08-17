@@ -6,10 +6,20 @@
 package web.msg;
 
 import ejb.BankAccount;
+import ejb.ItemFacade;
+import ejb.ManageStatefulBean;
 import ejb.User;
+import ejb.UserFacade;
+import ejb.session.ManagementStatefulBean;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -17,6 +27,9 @@ import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.Session;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +47,9 @@ public class UserMsg extends HttpServlet {
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
+
+    @EJB
+    private ManageStatefulBean msb;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,6 +84,9 @@ public class UserMsg extends HttpServlet {
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
+
+                msb.storeUserData(login);
+
                 response.sendRedirect("ListNews");
 
             } catch (JMSException ex) {
@@ -83,6 +102,7 @@ public class UserMsg extends HttpServlet {
             out.println("<title>Servlet UserMsg</title>");
             out.println("</head>");
             out.println("<body>");
+//            out.println("<h1>user: " + msb.getCurrentUser() + "</h1>");
             out.println("<h1>Servlet UserMsg at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

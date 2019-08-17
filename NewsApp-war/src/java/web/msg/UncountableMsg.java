@@ -5,18 +5,25 @@
  */
 package web.msg;
 
+import ejb.Basket;
+import ejb.BasketFacade;
 import ejb.Countable;
+import ejb.ManageStatefulBean;
 import ejb.Uncountable;
 import ejb.enumeration.Size;
 import ejb.enumeration.Unit;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -42,6 +49,12 @@ public class UncountableMsg extends HttpServlet {
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
 
+    @EJB
+    private ManagementStatefulBeanLocal msb;
+
+    @EJB
+    private BasketFacade basketFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +76,7 @@ public class UncountableMsg extends HttpServlet {
         String unit = request.getParameter("unit");
         String pricePerWeight = request.getParameter("pricePerWeight");
 
-        if ((name != null) && (country != null) && (overdue != null)&& (quantity != null)&& (unit != null)&& (pricePerWeight != null)) {
+        if ((name != null) && (country != null) && (overdue != null) && (quantity != null) && (unit != null) && (pricePerWeight != null)) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -74,20 +87,26 @@ public class UncountableMsg extends HttpServlet {
                 Uncountable e = new Uncountable();
                 e.setName(name);
                 e.setCountry(country);
-                
+
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = formatter.parse(overdue);
                 e.setOverdue(date);
-                
+
                 double quantityDouble = Double.parseDouble(quantity);
                 e.setQuantity(quantityDouble);
-                
-                if (unit == "KG") e.setUnit(Unit.KG);
-                else if (unit == "DAG") e.setUnit(Unit.DAG);
-                else e.setUnit(Unit.POUND);
-                
+
+                if ("KG".equals(unit)) {
+                    e.setUnit(Unit.KG);
+                } else if ("DAG".equals(unit)) {
+                    e.setUnit(Unit.DAG);
+                } else {
+                    e.setUnit(Unit.POUND);
+                }
+
                 double priceDouble = Double.parseDouble(pricePerWeight);
                 e.setPricePerWeight(priceDouble);
+                
+                e.setBasket(msb.getCurrentBasket());
 
                 message.setObject(e);
                 messageProducer.send(message);
