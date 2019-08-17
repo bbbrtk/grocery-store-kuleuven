@@ -10,6 +10,7 @@ import ejb.BankAccountFacade;
 import ejb.Basket;
 import ejb.BasketFacade;
 import ejb.User;
+import ejb.UserFacade;
 import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,9 +47,11 @@ public class SetUserBankMsg extends HttpServlet {
     @EJB
     private BankAccountFacade bankAccountFacade;
 
+    @EJB
+    private UserFacade userFacade;
+
 //    @PersistenceContext(unitName = "NewsApp-ejbPU")
 //    private EntityManager em;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -68,16 +71,24 @@ public class SetUserBankMsg extends HttpServlet {
             List banks = bankAccountFacade.findAll();
             for (Iterator it = banks.iterator(); it.hasNext();) {
                 BankAccount elem = (BankAccount) it.next();
-                
+
                 if (elem.getBankName().equals(name)) {
-                    
-                    List<User> userList = new ArrayList();
-                    userList.add(msb.getCurrentUser());
-                    
-                    System.out.println("--- SET USER BANK ---- " + msb.getCurrentUser().getLogin() + " == " + elem.getBankName());
+                           
+                            List<User> userList = new ArrayList();
+                            userList.add(msb.getCurrentUser());
+                            elem.setListOfUsers(userList);
+
+                            List<BankAccount> banksList = new ArrayList();
+                            banksList.add(elem);
+                            msb.getCurrentUser().setBankAccounts(banksList);
+
+                            bankAccountFacade.edit(elem);
+                            userFacade.edit(msb.getCurrentUser());
                 }
             }
         }
+
+        response.sendRedirect("ListNews");
 
         PrintWriter out = response.getWriter();
 
@@ -97,18 +108,17 @@ public class SetUserBankMsg extends HttpServlet {
         }
     }
 
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -122,7 +132,7 @@ public class SetUserBankMsg extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -133,7 +143,7 @@ public class SetUserBankMsg extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
