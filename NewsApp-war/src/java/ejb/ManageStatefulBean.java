@@ -27,6 +27,7 @@ public class ManageStatefulBean implements HttpSessionListener {
 
     private static User user = null;
     private static String login = "";
+    private static String basketName = "";
     private static Basket basket = null;
 
     @EJB
@@ -63,15 +64,19 @@ public class ManageStatefulBean implements HttpSessionListener {
             List baskets = basketFacade.findAll();
             for (Iterator it = baskets.iterator(); it.hasNext();) {
                 Basket elem = (Basket) it.next();
+                System.out.println("-----elem getName-- " + elem.getName() + " --- ");
                 if (elem.getName().equals(basketName)) {
                     basket = elem;
+                    this.basketName = basketName;
+                    System.out.println("------- STORE BASKET -- " + this.basketName + " --- ");
                 }
             }
         }
     }
 
-    public Basket getLastBasket() {
-        return basket;
+    public String getLastBasketName() {
+        
+        return basketName;
     }
 
     public void sessionCreated(HttpSessionEvent se) {

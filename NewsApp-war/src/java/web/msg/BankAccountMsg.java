@@ -6,13 +6,19 @@
 package web.msg;
 
 import ejb.BankAccount;
+import ejb.BankAccountFacade;
 import ejb.Basket;
+import ejb.ManageStatefulBean;
 import ejb.User;
+import ejb.UserFacade;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -32,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "BankAccountMsg", urlPatterns = {"/BankAccountMsg"})
 public class BankAccountMsg extends HttpServlet {
-    
+
     @Resource(mappedName = "jms/NewMessageFactory")
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
@@ -54,27 +60,29 @@ public class BankAccountMsg extends HttpServlet {
         // Add the following code to send the JMS message
         String name = request.getParameter("name");
         String money = request.getParameter("money");
-        
+
         if ((name != null) && (money != null)) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
                 MessageProducer messageProducer = session.createProducer(queue);
-                
+
                 ObjectMessage message = session.createObjectMessage();
 
                 //bank account
                 BankAccount e = new BankAccount();
+
                 e.setBankName(name);
                 double moneyDouble = Double.parseDouble(money);
                 e.setMoney(moneyDouble);
-                
+
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
+
                 response.sendRedirect("ListNews");
-                
+
             } catch (JMSException ex) {
                 ex.printStackTrace();
             }

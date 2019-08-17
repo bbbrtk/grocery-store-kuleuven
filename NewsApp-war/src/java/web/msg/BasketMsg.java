@@ -11,6 +11,7 @@ import ejb.BasketFacade;
 import ejb.ManageStatefulBean;
 import ejb.User;
 import ejb.UserFacade;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,11 +45,7 @@ public class BasketMsg extends HttpServlet {
     private Queue queue;
 
     @EJB
-    private ManageStatefulBean msb;
-
-    @EJB
-    private UserFacade userFacade;
-    
+    private ManagementStatefulBeanLocal msb;  
 
 
     /**
@@ -76,26 +73,15 @@ public class BasketMsg extends HttpServlet {
                 ObjectMessage message = session.createObjectMessage();
 
                 //bank account
-                String userLogin = msb.getCurrentUserLogin();
-
                 Basket e = new Basket();
                 e.setName(name);
+                e.setUser(msb.getCurrentUser());
 
-                List users = userFacade.findAll();
-                for (Iterator it = users.iterator(); it.hasNext();) {
-                    User elem = (User) it.next();
-                    if (elem.getLogin().equals(userLogin)) {
-                        e.setUser(elem);
-                        break;
-                    }
-                }
 
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
-
-                msb.storeBasketData(name);
 
                 response.sendRedirect("ListNews");
 

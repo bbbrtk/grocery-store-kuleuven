@@ -5,8 +5,10 @@
  */
 package ejb;
 
+import ejb.session.ManagementStatefulBeanLocal;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
 import javax.jms.JMSException;
@@ -15,6 +17,7 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSessionListener;
 
 /**
  *
@@ -25,59 +28,69 @@ import javax.persistence.PersistenceContext;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class UserMessage implements MessageListener {
-    
+
+    @EJB
+    private ManagementStatefulBeanLocal msb;
+
     @Resource
     private MessageDrivenContext mdc;
     @PersistenceContext(unitName = "NewsApp-ejbPU")
     private EntityManager em;
-    
+
     public UserMessage() {
     }
-    
+
     @Override
     public void onMessage(Message message) {
 
         ObjectMessage msg = null;
-    try {
-        if (message instanceof ObjectMessage) {
-            msg = (ObjectMessage) message;
-            Object e;
-            
-            if (msg.getObject().getClass() == new User().getClass()){
-                e = (User) msg.getObject();
-            }
-            else if(msg.getObject().getClass() == new Item().getClass()){
-                e = (Item) msg.getObject();
-            }
-            else if(msg.getObject().getClass() == new Countable().getClass()){
-                e = (Countable) msg.getObject();
-            }
-            else if(msg.getObject().getClass() == new Uncountable().getClass()){
-                e = (Uncountable) msg.getObject();
-            }            
-            else if(msg.getObject().getClass() == new Basket().getClass()){
-                e = (Basket) msg.getObject();
-            }
-            else if(msg.getObject().getClass() == new BankAccount().getClass()){
-                e = (BankAccount) msg.getObject();
-            }            
-            else{
-                e = (NewsEntity) msg.getObject();
-            }
+        try {
+            if (message instanceof ObjectMessage) {
+                msg = (ObjectMessage) message;
+                Object e;
 
-            save(e);
+                System.out.println("--- USER MESSAGE ---- ");
+
+                if (msg.getObject().getClass() == new User().getClass()) {
+                    e = (User) msg.getObject();
+                    save(e);
+                    msb.storeUser((User) e);
+                    System.out.println("---c user ---- " + msb.getCurrentUser().getLogin() + " --- ");
+                } else if (msg.getObject().getClass() == new Item().getClass()) {
+                    e = (Item) msg.getObject();
+                    save(e);
+                } else if (msg.getObject().getClass() == new Countable().getClass()) {
+                    e = (Countable) msg.getObject();
+                    save(e);
+                } else if (msg.getObject().getClass() == new Uncountable().getClass()) {
+                    e = (Uncountable) msg.getObject();
+                    save(e);
+                } else if (msg.getObject().getClass() == new Basket().getClass()) {
+                    e = (Basket) msg.getObject();
+                    save(e);
+                    msb.storeBasket((Basket) e);
+                    System.out.println("---c basket ---- " + msb.getCurrentBasket().getName() + " --- ");
+                } else if (msg.getObject().getClass() == new BankAccount().getClass()) {
+                    e = (BankAccount) msg.getObject();
+                    save(e);
+                } else {
+                    e = (NewsEntity) msg.getObject();
+                    save(e);
+                }
+
+//            save(e);
+            }
+        } catch (JMSException e) {
+            e.printStackTrace();
+            mdc.setRollbackOnly();
+        } catch (Throwable te) {
+            te.printStackTrace();
         }
-    } catch (JMSException e) {
-        e.printStackTrace();
-        mdc.setRollbackOnly();
-    } catch (Throwable te) {
-        te.printStackTrace();
-    }
 
     }
 
     public void save(Object object) {
         em.persist(object);
     }
-    
+
 }

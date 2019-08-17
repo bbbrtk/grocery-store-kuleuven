@@ -5,6 +5,8 @@
  */
 package ejb.session;
 
+import ejb.Basket;
+import ejb.User;
 import javax.ejb.Local;
 
 /**
@@ -12,16 +14,21 @@ import javax.ejb.Local;
  * @author Bartek
  */
 @Local
-public interface ManagementStatefulBeanLocal {  
+public interface ManagementStatefulBeanLocal {
 
+    public static User user = null;
     public static String login = "";
-    public static String password = "";
-    
-    void storeUserData(String login, String password);
+    public static String basketName = "";
+    public static Basket basket = null;
 
-    String getCurrentUser();
-    String getPassword();
-    
-    
-    
+    public void storeBasket(Basket basketStored);
+
+    public void storeUser(User userStored);
+
+    public User getCurrentUser();
+
+    public Basket getCurrentBasket();
+  
+    public void storeUserData(String login);
+
 }

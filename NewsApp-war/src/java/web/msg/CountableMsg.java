@@ -5,17 +5,25 @@
  */
 package web.msg;
 
+import ejb.Basket;
+import ejb.BasketFacade;
 import ejb.Countable;
+import ejb.ManageStatefulBean;
 import ejb.User;
+import ejb.UserFacade;
 import ejb.enumeration.Size;
+import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -41,6 +49,12 @@ public class CountableMsg extends HttpServlet {
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
 
+    @EJB
+    private ManagementStatefulBeanLocal msb;
+
+    @EJB
+    private BasketFacade basketFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,7 +76,7 @@ public class CountableMsg extends HttpServlet {
         String size = request.getParameter("size");
         String price = request.getParameter("price");
 
-        if ((name != null) && (country != null) && (overdue != null)&& (quantity != null)&& (size != null)&& (price != null)) {
+        if ((name != null) && (country != null) && (overdue != null) && (quantity != null) && (size != null) && (price != null)) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -73,20 +87,26 @@ public class CountableMsg extends HttpServlet {
                 Countable e = new Countable();
                 e.setName(name);
                 e.setCountry(country);
-                
+
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = formatter.parse(overdue);
                 e.setOverdue(date);
-                
+
                 double quantityDouble = Double.parseDouble(quantity);
                 e.setQuantity(quantityDouble);
-                
-                if (size == "BIG") e.setSize(Size.BIG);
-                else if (size == "MEDIUM") e.setSize(Size.MEDIUM);
-                else e.setSize(Size.SMALL);
-                
+
+                if ("BIG".equals(size)) {
+                    e.setSize(Size.BIG);
+                } else if ("MEDIUM".equals(size)) {
+                    e.setSize(Size.MEDIUM);
+                } else {
+                    e.setSize(Size.SMALL);
+                }
+
                 double priceDouble = Double.parseDouble(price);
                 e.setPrice(priceDouble);
+                
+                e.setBasket(msb.getCurrentBasket());
 
                 message.setObject(e);
                 messageProducer.send(message);
