@@ -47,44 +47,46 @@ public class NewMessage implements MessageListener {
     try {
         if (message instanceof ObjectMessage) {
             msg = (ObjectMessage) message;
-            Object e;
-            
-            System.out.println("--- USER MESSAGE ---- ");
-            
-            if (msg.getObject().getClass() == new User().getClass()){
-                e = (User) msg.getObject();
-                save(e);
-                msb.storeUser((User)e);
-                System.out.println("---c user ---- " + msb.getCurrentUser().getLogin() + " --- ");
-            }
-            else if(msg.getObject().getClass() == new Item().getClass()){
-                e = (Item) msg.getObject();
-                save(e);
-            }
-            else if(msg.getObject().getClass() == new Countable().getClass()){
-                e = (Countable) msg.getObject();
-                save(e);
-            }
-            else if(msg.getObject().getClass() == new Uncountable().getClass()){
-                e = (Uncountable) msg.getObject();
-                save(e);
-            }            
-            else if(msg.getObject().getClass() == new Basket().getClass()){
-                e = (Basket) msg.getObject();
-                save(e);
-                msb.storeBasket((Basket)e);
-                                System.out.println("---c basket ---- " + msb.getCurrentBasket().getName() + " --- ");
-            }
-            else if(msg.getObject().getClass() == new BankAccount().getClass()){
-                e = (BankAccount) msg.getObject();
-                save(e);
-            }            
-            else{
-                e = (NewsEntity) msg.getObject();
-                save(e);
-            }
+                Object e;
+
+                System.out.println("--- ejb.UserMessage.onMessage  --- ");
+
+                if (msg.getObject().getClass() == new User().getClass()) {
+                    e = (User) msg.getObject();
+                    save(e);
+                    msb.storeUser((User) e);
+                    System.out.println("--- current user --- " + msb.getCurrentUser().getLogin() + " --- ");
+                    System.out.println("--- USER PERSISTED --- ");
+                } else if (msg.getObject().getClass() == new Item().getClass()) {
+                    e = (Item) msg.getObject();
+                    save(e);
+                    System.out.println("--- ITEM PERSISTED --- ");
+                } else if (msg.getObject().getClass() == new Countable().getClass()) {
+                    e = (Countable) msg.getObject();
+                    save(e);
+                    System.out.println("--- COUNTABLE PERSISTED --- ");
+                } else if (msg.getObject().getClass() == new Uncountable().getClass()) {
+                    e = (Uncountable) msg.getObject();
+                    save(e);
+                    System.out.println("--- UNCOUNTABLE PERSISTED --- ");
+                } else if (msg.getObject().getClass() == new Basket().getClass()) {
+                    e = (Basket) msg.getObject();
+                    save(e);
+                    msb.storeBasket((Basket) e);
+                    System.out.println("--- current basket --- " + msb.getCurrentBasket().getName() + " --- ");
+                    System.out.println("--- BASKET PERSISTED --- ");
+                } else if (msg.getObject().getClass() == new BankAccount().getClass()) {
+                    e = (BankAccount) msg.getObject();
+                    save(e);
+                    System.out.println("--- BANKACCOUNT PERSISTED --- ");
+                } else {
+                    e = (NewsEntity) msg.getObject();
+                    save(e);
+                    System.out.println("--- NEWENTITY PERSISTED --- ");
+                }
+
 //            save(e);
-        }
+            }
     } catch (JMSException e) {
         e.printStackTrace();
         mdc.setRollbackOnly();

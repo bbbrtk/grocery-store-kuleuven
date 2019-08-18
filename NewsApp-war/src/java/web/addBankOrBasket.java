@@ -21,14 +21,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "StartPage", urlPatterns = {"/StartPage"})
-public class StartPage extends HttpServlet {
-
-    @EJB
-    private UserLogoutTimerLocal userLogoutTimer;
+@WebServlet(name = "addBankOrBasket", urlPatterns = {"/addBankOrBasket"})
+public class addBankOrBasket extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
+    
+    
+    @EJB
+    private UserLogoutTimerLocal userLogoutTimer;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,7 +52,7 @@ public class StartPage extends HttpServlet {
             request.setAttribute("userId", msb.getCurrentUser().getId());
             request.setAttribute("timerStatus", userLogoutTimer.getCounter());
 
-            RequestDispatcher view = request.getRequestDispatcher("start/startjsp.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("add/addBankOrBasket.jsp");
             view.forward(request, response);
         }
     }
