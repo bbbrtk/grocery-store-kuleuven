@@ -42,11 +42,11 @@ and open the template in the editor.
                         <li class="nav-item dropdown messages-menu">
                             <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-success bg-success">10</span>
+                                <span class="label label-success bg-success"><%= request.getAttribute("timerStatus")%></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <ul class="dropdown-menu-over list-unstyled">
-                                    <li class="header-ul text-center">You have 4 messages</li>
+                                    <li class="header-ul text-center">Session time status</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu list-unstyled">
@@ -56,10 +56,10 @@ and open the template in the editor.
                                                         <img src="http://via.placeholder.com/160x160" class="rounded-circle  " alt="User Image">
                                                     </div>
                                                     <h4>
-                                                        Support Team
-                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                        <%= request.getAttribute("timerStatus")%> / 300 seconds
+                                                        <small><i class="fa fa-clock-o"></i> Now </small>
                                                     </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
+                                                    <p>Logout when time passes</p>
                                                 </a>
                                             </li>
                                             <!-- end message -->
@@ -69,51 +69,15 @@ and open the template in the editor.
                                                         <img src="http://via.placeholder.com/160x160" class="rounded-circle " alt="User Image">
                                                     </div>
                                                     <h4>
-                                                        AdminLTE Design Team
-                                                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                                        Session started
+                                                        <small><i class="fa fa-clock-o"></i>On startup</small>
                                                     </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="http://via.placeholder.com/160x160" class="rounded-circle " alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Developers
-                                                        <small><i class="fa fa-clock-o"></i> Today</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="http://via.placeholder.com/160x160" class="rounded-circle " alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Sales Department
-                                                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="http://via.placeholder.com/160x160" class="rounded-circle " alt="User Image">
-                                                    </div>
-                                                    <h4>
-                                                        Reviewers
-                                                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
+                                                    <p>Timer started</p>
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="footer-ul text-center"><a href="#">See All Messages</a></li>
+                                    <li class="footer-ul text-center"><a href="#">Close</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -181,15 +145,20 @@ and open the template in the editor.
                         <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                         <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                             <ul class="sub-menu collapse" id="dashboard">
-                                <li class="active"><a href="#">CSS3 Animation</a></li>
                                 <li><a href="#">Show your baskets</a></li>
                                 <li><a href="#">Add new basket</a></li>
                                 <li><a href="#">Switch basket</a></li>
                             </ul>
                         </li>
+                        <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
+                            <ul  class="sub-menu collapse" id="e-commerce" >
+                                <li><a href=""> All Items</a></li>
+                                <li><a href=""> Your Items</a></li>
+                                <li><a href="https://www.ebay.com/"> New offer </a></li>
+                            </ul>
+                        </li>
                         <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Bank Accounts</span> <span class="fa fa-chevron-left pull-right"></span> </a>
                             <ul class="sub-menu collapse" id="products">
-                                <li class="active"><a href="#">CSS3 Animation</a></li>
                                 <li><a href="#">Show accounts</a></li>
                                 <li><a href="#">Set new account</a></li>
                                 <li><a href="#">Create new account</a></li>
@@ -202,13 +171,6 @@ and open the template in the editor.
                                 <li><a href="/settings/settings.html"> Change Password</a></li>
                                 <li><a href="/settings/settings.html"> Change Login</a></li>
                                 <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
-                            <ul  class="sub-menu collapse" id="e-commerce" >
-                                <li><a href=""> All Items</a></li>
-                                <li><a href=""> Your Items</a></li>
-                                <li><a href="https://www.ebay.com/"> New offer </a></li>
                             </ul>
                         </li>
                         <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-warning"></i>                               

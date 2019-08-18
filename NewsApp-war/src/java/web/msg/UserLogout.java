@@ -37,6 +37,9 @@ public class UserLogout extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+//        msb.resetUser();
+//        msb.resetBasket();
+        
         msb.storeUser(null);
         msb.storeBasket(null);
         
