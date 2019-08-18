@@ -32,6 +32,8 @@ public interface ManagementStatefulBeanLocal {
     public Basket getCurrentBasket();
 
     public void storeUserData(String login);
+    
+    public void clearState() ;
 
 
 

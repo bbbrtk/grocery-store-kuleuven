@@ -21,20 +21,19 @@ public class UserLogoutTimer implements UserLogoutTimerLocal {
     @EJB
     private ManagementStatefulBeanLocal msb;
 
-    private int counter = 0;
-    private final int TIMER_STOP = 300;
+    private int counter = 300;
 
     @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*", second = "*/1", persistent = false)
     @Override
     public void myTimer() {
-        counter += 1;
+        counter -= 1;
 
         if (counter % 10 == 0) {
-            System.out.println("Timer status: " + counter + "/" + TIMER_STOP);
+            System.out.println("Timer status: " + counter + "sec");
         }
 
-        if (counter == TIMER_STOP) {
-            counter = 0;
+        if (counter == 0) {
+            counter = 300;
             msb.storeUser(null);
         }
     }

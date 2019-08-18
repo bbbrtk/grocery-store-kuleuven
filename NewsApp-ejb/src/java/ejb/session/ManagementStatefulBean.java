@@ -45,8 +45,7 @@ public class ManagementStatefulBean implements ManagementStatefulBeanLocal {
 
     @Interceptors(BeanInterceptor.class)
     public void storeUser(User userStored) {
-
-        if (userStored != null) {
+        if (userStored == null) {
             clearState();
         } else {
             this.user = userStored;
