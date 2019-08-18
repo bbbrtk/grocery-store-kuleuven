@@ -9,10 +9,12 @@ import ejb.Basket;
 import ejb.BasketFacade;
 import ejb.User;
 import ejb.UserFacade;
+import ejb.interceptor.BeanInterceptor;
 import ejb.timer.UserLogoutTimerLocal;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpSessionEvent;
 
 /**
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpSessionEvent;
  */
 @Stateful
 public class ManagementStatefulBean implements ManagementStatefulBeanLocal {
+
     @EJB
     private UserLogoutTimerLocal timerBean;
 
@@ -35,28 +38,24 @@ public class ManagementStatefulBean implements ManagementStatefulBeanLocal {
 
     @EJB
     private BasketFacade basketFacade;
-    
-    
-
 
     public void storeUserData(String login) {
         this.login = login;
     }
 
+    @Interceptors(BeanInterceptor.class)
     public void storeUser(User userStored) {
-        this.user = userStored;
+
         if (userStored != null) {
-            
+            clearState();
         } else {
-
+            this.user = userStored;
         }
+
     }
 
-    public void resetUser() {
+    public void clearState() {
         this.user = null;
-    }
-
-    public void resetBasket() {
         this.basket = null;
     }
 

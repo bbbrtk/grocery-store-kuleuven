@@ -33,9 +33,6 @@ public interface ManagementStatefulBeanLocal {
 
     public void storeUserData(String login);
 
-    public void resetUser();
-    
-    public void resetBasket();
 
 
 }

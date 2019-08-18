@@ -36,7 +36,6 @@ public class UserLogoutTimer implements UserLogoutTimerLocal {
         if (counter == TIMER_STOP) {
             counter = 0;
             msb.storeUser(null);
-            msb.storeBasket(null);
         }
     }
 
