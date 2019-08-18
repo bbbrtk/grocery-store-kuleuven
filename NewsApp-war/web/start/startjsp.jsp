@@ -15,11 +15,11 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <link rel="stylesheet" type="text/css" href="start/startcss.css">
-         <script src="start/startjs.js"></script> 
-         
+        <script src="start/startjs.js"></script> 
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -28,7 +28,7 @@ and open the template in the editor.
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        
+
     </head>
     <body>
         <header class="header">
@@ -172,39 +172,29 @@ and open the template in the editor.
                             <img src="http://via.placeholder.com/160x160" class="rounded-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p> <%= request.getAttribute("userLogin") %></p>
-                            <p> ID: <%= request.getAttribute("userId") %></p>
+                            <p> <%= request.getAttribute("userLogin")%></p>
+                            <p> ID: <%= request.getAttribute("userId")%></p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
                     <ul class="list-sidebar bg-defoult">
+                        <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                         <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                             <ul class="sub-menu collapse" id="dashboard">
                                 <li class="active"><a href="#">CSS3 Animation</a></li>
-                                <li><a href="#">General</a></li>
-                                <li><a href="#">Buttons</a></li>
-                                <li><a href="#">Tabs & Accordions</a></li>
-                                <li><a href="#">Typography</a></li>
-                                <li><a href="#">FontAwesome</a></li>
-                                <li><a href="#">Slider</a></li>
-                                <li><a href="#">Panels</a></li>
-                                <li><a href="#">Widgets</a></li>
-                                <li><a href="#">Bootstrap Model</a></li>
+                                <li><a href="#">Show your baskets</a></li>
+                                <li><a href="#">Add new basket</a></li>
+                                <li><a href="#">Switch basket</a></li>
                             </ul>
                         </li>
-                        <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a> </li>
                         <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Bank Accounts</span> <span class="fa fa-chevron-left pull-right"></span> </a>
                             <ul class="sub-menu collapse" id="products">
                                 <li class="active"><a href="#">CSS3 Animation</a></li>
-                                <li><a href="#">General</a></li>
-                                <li><a href="#">Buttons</a></li>
-                                <li><a href="#">Tabs & Accordions</a></li>
-                                <li><a href="#">Typography</a></li>
-                                <li><a href="#">FontAwesome</a></li>
-                                <li><a href="#">Slider</a></li>
-                                <li><a href="#">Panels</a></li>
-                                <li><a href="#">Widgets</a></li>
-                                <li><a href="#">Bootstrap Model</a></li>
+                                <li><a href="#">Show accounts</a></li>
+                                <li><a href="#">Set new account</a></li>
+                                <li><a href="#">Create new account</a></li>
+                                <li><a href="http://bankbelgium.com/">Bank Belgium</a></li>
+                                <li><a href="https://www.kbc.com/en">KBC</a></li>
                             </ul>
                         </li>
                         <li> <a href="#" data-toggle="collapse" data-target="#tables" class="collapsed active" ><i class="fa fa-laptop"></i> <span class="nav-label">Settings</span><span class="fa fa-chevron-left pull-right"></span></a>
@@ -214,23 +204,19 @@ and open the template in the editor.
                                 <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
                             </ul>
                         </li>
-                        <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Your items</span><span class="fa fa-chevron-left pull-right"></span></a>
+                        <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
                             <ul  class="sub-menu collapse" id="e-commerce" >
-                                <li><a href=""> Products grid</a></li>
-                                <li><a href=""> Products list</a></li>
-                                <li><a href="">Product edit</a></li>
-                                <li><a href=""> Product detail</a></li>
-                                <li><a href="">Cart</a></li>
-                                <li><a href=""> Orders</a></li>
-                                <li><a href=""> Credit Card form</a> </li>
+                                <li><a href=""> All Items</a></li>
+                                <li><a href=""> Your Items</a></li>
+                                <li><a href="https://www.ebay.com/"> New offer </a></li>
                             </ul>
                         </li>
                         <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-warning"></i>                               
                                 <span class="nav-label">Log out</span> 
                             </a></li>
                         <li> <i class="fa fa-files-o"></i> 
-                                    <div style="width:10px;height:1000px;"></div>
-                                </li>
+                            <div style="width:10px;height:1000px;"></div>
+                        </li>
                     </ul>
                 </div>
             </aside>
