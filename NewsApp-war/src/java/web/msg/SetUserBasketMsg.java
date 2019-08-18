@@ -6,31 +6,14 @@
 package web.msg;
 
 import ejb.BankAccount;
-import ejb.ItemFacade;
-import ejb.ManageStatefulBean;
-import ejb.User;
+import ejb.BankAccountFacade;
 import ejb.UserFacade;
-import ejb.session.ManagementStatefulBean;
 import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.inject.Inject;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,16 +24,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "UserMsg", urlPatterns = {"/UserMsg"})
-public class UserMsg extends HttpServlet {
-
-    @Resource(mappedName = "jms/NewMessageFactory")
-    private ConnectionFactory connectionFactory;
-    @Resource(mappedName = "jms/NewMessage")
-    private Queue queue;
+@WebServlet(name = "SetUserBasketMsg", urlPatterns = {"/SetUserBasketMsg"})
+public class SetUserBasketMsg extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
+
+    @EJB
+    private BankAccountFacade bankAccountFacade;
 
     @EJB
     private UserFacade userFacade;
@@ -67,68 +48,37 @@ public class UserMsg extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        // Add the following code to send the JMS message
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        Boolean userExist = false;
-
-        if ((login != null) && (password != null)) {
-
-            List users = userFacade.findAll();
-            for (Iterator it = users.iterator(); it.hasNext();) {
-                User elem = (User) it.next();
-                if (elem.getLogin().equals(login) && elem.getPassword().equals(password)) {
-                    msb.storeUser(elem);
-                    userExist = true;
-                    response.sendRedirect("ListNews");
-                    break;
-                }
-                else if(elem.getLogin().equals(login) && !elem.getPassword().equals(password)){
-                    userExist = true;
-                    response.sendRedirect("userCreate.html");
-                }
-            }
-
-            if (!userExist) {
-
-                try {
-
-                    Connection connection = connectionFactory.createConnection();
-                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                    MessageProducer messageProducer = session.createProducer(queue);
-
-                    ObjectMessage message = session.createObjectMessage();
-
-                    User e = new User();
-                    e.setLogin(login);
-                    e.setPassword(password);
-
-                    message.setObject(e);
-                    messageProducer.send(message);
-                    messageProducer.close();
-                    connection.close();
-
-                    msb.storeUserData(login);
-
-                    response.sendRedirect("ListNews");
-
-                } catch (JMSException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserMsg</title>");
+            out.println("<title>Servlet SetUserBasketMsg</title>");
             out.println("</head>");
             out.println("<body>");
-//            out.println("<h1>user: " + msb.getCurrentUser() + "</h1>");
-            out.println("<h1>Servlet UserMsg at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SetUserBasketMsg at " + request.getContextPath() + "</h1>");
+
+            // BANKS
+            out.println("<h1>BANKS</h1>");
+            List banks = bankAccountFacade.findAll();
+            for (Iterator it = banks.iterator(); it.hasNext();) {
+                BankAccount elem = (BankAccount) it.next();
+                out.println(" <b>" + elem.getBankName() + " -- " + elem.getId() + " </b><br />");
+            }
+            out.println("<br><br>");
+
+            out.println("        <h2>User BANK Form</h2>\n"
+                    + "        <form method=\"post\" action=\"SetUserBankMsg\">\n"
+                    + "            <fieldset>\n"
+                    + "                <legend>Personal Particular 2</legend>\n"
+                    + "                Name: <input type=\"text\" name=\"name\" /><br /><br />\n"
+                    + "            </fieldset>\n"
+                    + "\n"
+                    + "            <input type=\"submit\" value=\"SEND\" />\n"
+                    + "            <input type=\"reset\" value=\"CLEAR\" />\n"
+                    + "        </form>");
+
             out.println("</body>");
             out.println("</html>");
         } finally {
