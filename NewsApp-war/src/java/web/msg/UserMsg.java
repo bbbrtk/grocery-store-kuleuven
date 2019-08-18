@@ -87,7 +87,7 @@ public class UserMsg extends HttpServlet {
             if (elem.getLogin().equals(login) && elem.getPassword().equals(password)) {
                 msb.storeUser(elem);
                 userExist = true;
-                response.sendRedirect("ListNews"); //StartPage
+                response.sendRedirect("StartPage"); //StartPage
                 break;
                 
             } 
@@ -117,7 +117,7 @@ public class UserMsg extends HttpServlet {
                 messageProducer.close();
                 connection.close();
 
-                response.sendRedirect("ListNews"); 
+                response.sendRedirect("StartPage"); 
 
             } catch (JMSException ex) {
                 ex.printStackTrace();

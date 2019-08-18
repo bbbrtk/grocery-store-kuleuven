@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.msg;
+package web;
 
-import ejb.BankAccountFacade;
-import ejb.UserFacade;
 import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,18 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetUserBasketMsg", urlPatterns = {"/SetUserBasketMsg"})
-public class SetUserBasketMsg extends HttpServlet {
+@WebServlet(name = "StartPage", urlPatterns = {"/StartPage"})
+public class StartPage extends HttpServlet {
 
-    @EJB
+        @EJB
     private ManagementStatefulBeanLocal msb;
-
-    @EJB
-    private BankAccountFacade bankAccountFacade;
-
-    @EJB
-    private UserFacade userFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
