@@ -5,16 +5,10 @@
  */
 package web.msg;
 
-import ejb.BankAccount;
-import ejb.BankAccountFacade;
-import ejb.UserFacade;
 import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,18 +19,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetUserBasketMsg", urlPatterns = {"/SetUserBasketMsg"})
-public class SetUserBasketMsg extends HttpServlet {
+@WebServlet(name = "UserLogout", urlPatterns = {"/UserLogout"})
+public class UserLogout extends HttpServlet {
 
-    @EJB
+        @EJB
     private ManagementStatefulBeanLocal msb;
-
-    @EJB
-    private BankAccountFacade bankAccountFacade;
-
-    @EJB
-    private UserFacade userFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,17 +36,13 @@ public class SetUserBasketMsg extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        msb.storeUser(null);
+        msb.storeBasket(null);
+        
+        response.sendRedirect("login/login.html");
+        
 
-        if (msb.getCurrentUser() == null) {
-            RequestDispatcher view = request.getRequestDispatcher("login/login.html");
-            view.forward(request, response);
-        } else {
-            request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
-            request.setAttribute("userId", msb.getCurrentUser().getId());
-
-            RequestDispatcher view = request.getRequestDispatcher("start/startjsp.jsp");
-            view.forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

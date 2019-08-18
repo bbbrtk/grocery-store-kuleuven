@@ -68,72 +68,65 @@ public class UserMsg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        // Add the following code to send the JMS message
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String login = "";
+        login = request.getParameter("login");
+        String password = "";
+        password = request.getParameter("password");
+        String loginRegister = "";
+        loginRegister = request.getParameter("loginRegister");
         Boolean userExist = false;
+        
+        System.out.println("------ login: " + login);
+        System.out.println("------ pwd  : " + password);
+        System.out.println("-------------- reg  : " + loginRegister);
 
-        if ((login != null) && (password != null)) {
-
-            List users = userFacade.findAll();
-            for (Iterator it = users.iterator(); it.hasNext();) {
-                User elem = (User) it.next();
-                if (elem.getLogin().equals(login) && elem.getPassword().equals(password)) {
-                    msb.storeUser(elem);
-                    userExist = true;
-                    response.sendRedirect("ListNews");
-                    break;
-                }
-                else if(elem.getLogin().equals(login) && !elem.getPassword().equals(password)){
-                    userExist = true;
-                    response.sendRedirect("userCreate.html");
-                }
-            }
-
-            if (!userExist) {
-
-                try {
-
-                    Connection connection = connectionFactory.createConnection();
-                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                    MessageProducer messageProducer = session.createProducer(queue);
-
-                    ObjectMessage message = session.createObjectMessage();
-
-                    User e = new User();
-                    e.setLogin(login);
-                    e.setPassword(password);
-
-                    message.setObject(e);
-                    messageProducer.send(message);
-                    messageProducer.close();
-                    connection.close();
-
-                    msb.storeUserData(login);
-
-                    response.sendRedirect("ListNews");
-
-                } catch (JMSException ex) {
-                    ex.printStackTrace();
-                }
+//        if ((login != "") && (password != "")) {
+        List users = userFacade.findAll();
+        for (Iterator it = users.iterator(); it.hasNext();) {
+            User elem = (User) it.next();
+            if (elem.getLogin().equals(login) && elem.getPassword().equals(password)) {
+                msb.storeUser(elem);
+                userExist = true;
+                response.sendRedirect("ListNews"); //StartPage
+                break;
+                
+            } 
+            else if ( (elem.getLogin().equals(loginRegister)) || (elem.getLogin().equals(login)) ){
+                userExist = true;
+                response.sendRedirect("login/login.html");
+                break;
             }
         }
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserMsg</title>");
-            out.println("</head>");
-            out.println("<body>");
-//            out.println("<h1>user: " + msb.getCurrentUser() + "</h1>");
-            out.println("<h1>Servlet UserMsg at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+
+        if ((!userExist) && (!"".equals(loginRegister))) {
+
+            try {
+
+                Connection connection = connectionFactory.createConnection();
+                Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                MessageProducer messageProducer = session.createProducer(queue);
+
+                ObjectMessage message = session.createObjectMessage();
+
+                User e = new User();
+                e.setLogin(loginRegister);
+                e.setPassword(loginRegister); // inital pwd same as login
+
+                message.setObject(e);
+                messageProducer.send(message);
+                messageProducer.close();
+                connection.close();
+
+                response.sendRedirect("ListNews"); 
+
+            } catch (JMSException ex) {
+                ex.printStackTrace();
+            }
+        } 
+        else if (!userExist) {
+            response.sendRedirect("login/login.html");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
