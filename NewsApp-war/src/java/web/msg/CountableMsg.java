@@ -88,20 +88,24 @@ public class CountableMsg extends HttpServlet {
                 e.setName(name);
                 e.setCountry(country);
 
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = formatter.parse(overdue);
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//                Date date = formatter.parse(overdue);
+                Date date = (Date) request.getAttribute("overdueA");
                 e.setOverdue(date);
 
-                double quantityDouble = Double.parseDouble(quantity);
-                e.setQuantity(quantityDouble);
+//                double quantityDouble = Double.parseDouble(quantity);
+                double qunatityDouble = (Double) request.getAttribute("quantityA");
+                e.setQuantity(qunatityDouble);
 
-                if ("BIG".equals(size)) {
-                    e.setSize(Size.BIG);
-                } else if ("MEDIUM".equals(size)) {
-                    e.setSize(Size.MEDIUM);
-                } else {
-                    e.setSize(Size.SMALL);
-                }
+//                if ("BIG".equals(size)) {
+//                    e.setSize(Size.BIG);
+//                } else if ("MEDIUM".equals(size)) {
+//                    e.setSize(Size.MEDIUM);
+//                } else {
+//                    e.setSize(Size.SMALL);
+//                }
+                
+                e.setSize((Size)request.getAttribute("sizeA"));
 
                 double priceDouble = Double.parseDouble(price);
                 e.setPrice(priceDouble);
