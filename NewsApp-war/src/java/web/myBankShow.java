@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.msg;
+package web;
 
-import ejb.BankAccount;
-import ejb.BankAccountFacade;
 import ejb.UserFacade;
+import ejb.interceptor.SingletonSessionStateLocal;
 import ejb.session.ManagementStatefulBeanLocal;
+import ejb.timer.UserLogoutTimerLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,14 +23,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetUserBasketMsg", urlPatterns = {"/SetUserBasketMsg"})
-public class SetUserBasketMsg extends HttpServlet {
+@WebServlet(name = "myBankShow", urlPatterns = {"/myBankShow"})
+public class myBankShow extends HttpServlet {
+
+    @EJB
+    private UserLogoutTimerLocal userLogoutTimer;
 
     @EJB
     private ManagementStatefulBeanLocal msb;
-
     @EJB
-    private BankAccountFacade bankAccountFacade;
+    private SingletonSessionStateLocal sssl;
 
     @EJB
     private UserFacade userFacade;
@@ -48,41 +49,19 @@ public class SetUserBasketMsg extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SetUserBasketMsg</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SetUserBasketMsg at " + request.getContextPath() + "</h1>");
+        if (msb.getCurrentUser() == null) {
+            RequestDispatcher view = request.getRequestDispatcher("login/newlogin.html");
+            view.forward(request, response);
+        } else {
+            request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
+            request.setAttribute("userId", msb.getCurrentUser().getId());
+            request.setAttribute("timerStatus", userLogoutTimer.getCounter());
+            request.setAttribute("basketList", userFacade.myBankAccounts(msb.getCurrentUser().getId()));
+            request.setAttribute("tasks", sssl.getActions());
 
-            // BANKS
-            out.println("<h1>BANKS</h1>");
-            List banks = bankAccountFacade.findAll();
-            for (Iterator it = banks.iterator(); it.hasNext();) {
-                BankAccount elem = (BankAccount) it.next();
-                out.println(" <b>" + elem.getBankName() + " -- " + elem.getId() + " </b><br />");
-            }
-            out.println("<br><br>");
-
-            out.println("        <h2>User BANK Form</h2>\n"
-                    + "        <form method=\"post\" action=\"SetUserBankMsg\">\n"
-                    + "            <fieldset>\n"
-                    + "                <legend>Personal Particular 2</legend>\n"
-                    + "                Name: <input type=\"text\" name=\"name\" /><br /><br />\n"
-                    + "            </fieldset>\n"
-                    + "\n"
-                    + "            <input type=\"submit\" value=\"SEND\" />\n"
-                    + "            <input type=\"reset\" value=\"CLEAR\" />\n"
-                    + "        </form>");
-
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+//            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );
+            RequestDispatcher view = request.getRequestDispatcher("show/showBank.jsp");
+            view.forward(request, response);
         }
     }
 

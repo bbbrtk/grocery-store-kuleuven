@@ -5,15 +5,12 @@
  */
 package web;
 
-import ejb.BankAccount;
-import ejb.Basket;
+import ejb.BankAccountFacade;
 import ejb.UserFacade;
 import ejb.interceptor.SingletonSessionStateLocal;
 import ejb.session.ManagementStatefulBeanLocal;
 import ejb.timer.UserLogoutTimerLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,19 +23,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "myBasketsShow", urlPatterns = {"/myBasketsShow"})
-public class myBasketsShow extends HttpServlet {
-
-    @EJB
-    private UserLogoutTimerLocal userLogoutTimer;
+@WebServlet(name = "SetBankOrBasket", urlPatterns = {"/SetBankOrBasket"})
+public class SetBankOrBasket extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
-    @EJB
-    private SingletonSessionStateLocal sssl;
 
     @EJB
-    private UserFacade userFacade;
+    private UserLogoutTimerLocal userLogoutTimer;
+    @EJB
+    private SingletonSessionStateLocal sssl;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,11 +54,9 @@ public class myBasketsShow extends HttpServlet {
             request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
             request.setAttribute("userId", msb.getCurrentUser().getId());
             request.setAttribute("timerStatus", userLogoutTimer.getCounter());
-            request.setAttribute("basketList", userFacade.myBasketsName(msb.getCurrentUser().getId()));
             request.setAttribute("tasks", sssl.getActions());
 
-//            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );
-            RequestDispatcher view = request.getRequestDispatcher("show/showBasket.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("add/setBankOrBasket.jsp");
             view.forward(request, response);
         }
 

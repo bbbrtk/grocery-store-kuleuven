@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--    
+    Author     : Bartosz Sobkowiak
+    University : KU Leuven, Belgium
+-->
+<html>
+    <head>
+        <title>Login page</title>
+
+        <link rel="stylesheet" type="text/css" href="logincss.css">
+        <script src="loginjs.js"></script> 
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    </head>
+    <body>
+        <div class="login-wrap">
+            <div class="login-html">
+                <form method="post" action="/NewsApp-war/UserMsg">
+                    <input id="signin" type="radio" name="tab" class="sign-in" checked><label for="signin" class="tab">Sign In</label>
+                    <input id="register" type="radio" name="tab" class="for-pwd"><label for="register" class="tab">Register</label>
+                    <div class="login-form">
+                        <div class="sign-in-htm">
+                            <div class="group">
+                                <label for="login" class="label">Username</label>
+                                <input name="login" id="login" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <label for="password" class="label">Password</label>
+                                <input name="password" id="password" type="password" class="input" data-type="password">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Sign In">
+                            </div>
+                            <div class="group">
+                                <label for="login" class="label">If you put wrong credentials, page will reset </label>
+                            </div>
+                            <div class="hr"></div>
+
+                        </div>
+                        <div class="for-pwd-htm">
+                            <div class="group">
+                                <label for="loginRegister" class="label">Your username</label>
+                                <input name="loginRegister" id="loginRegister" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Register new user">
+                            </div>
+                                                    <div class="group">
+                                <label for="login" class="label">If user exists, you won't be registered and logged in</label>
+                            </div>
+                            <div class="hr"></div>
+
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </body>
+</html>

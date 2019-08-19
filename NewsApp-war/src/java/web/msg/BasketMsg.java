@@ -90,14 +90,15 @@ public class BasketMsg extends HttpServlet {
         }
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BasketMsg</title>");
+            out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BasketMsg at " + request.getContextPath() + "</h1>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
             out.println("</body>");
             out.println("</html>");
         } finally {

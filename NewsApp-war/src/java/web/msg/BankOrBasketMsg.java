@@ -36,13 +36,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "BankAccountMsg", urlPatterns = {"/BankAccountMsg"})
-public class BankAccountMsg extends HttpServlet {
+@WebServlet(name = "BankOrBasketMsg", urlPatterns = {"/BankOrBasketMsg"})
+public class BankOrBasketMsg extends HttpServlet {
 
     @Resource(mappedName = "jms/NewMessageFactory")
     private ConnectionFactory connectionFactory;
     @Resource(mappedName = "jms/NewMessage")
     private Queue queue;
+
+    @EJB
+    private ManagementStatefulBeanLocal msb;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,11 +60,14 @@ public class BankAccountMsg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        // Add the following code to send the JMS message
-        String name = request.getParameter("name");
-        String money = request.getParameter("money");
+        String name = "";
+        name = request.getParameter("bankName");
+        String money = "";
+        money = request.getParameter("money");
+        String basketName = "";
+        basketName = request.getParameter("basketName");
 
-        if ((name != null) && (money != null)) {
+        if (!(name.equals("")) && !(money.equals(""))) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -71,8 +77,8 @@ public class BankAccountMsg extends HttpServlet {
 
                 //bank account
                 BankAccount e = new BankAccount();
-
                 e.setBankName(name);
+
                 double moneyDouble = Double.parseDouble(money);
                 e.setMoney(moneyDouble);
 
@@ -81,28 +87,53 @@ public class BankAccountMsg extends HttpServlet {
                 messageProducer.close();
                 connection.close();
 
-                response.sendRedirect("ListNews");
+                response.sendRedirect("StartPage");
+
+            } catch (JMSException ex) {
+                ex.printStackTrace();
+            }
+        } else if (!basketName.equals("")) {
+            try {
+                Connection connection = connectionFactory.createConnection();
+                Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                MessageProducer messageProducer = session.createProducer(queue);
+
+                ObjectMessage message = session.createObjectMessage();
+
+                //bank account
+                Basket e = new Basket();
+                e.setName(basketName);
+                e.setUser(msb.getCurrentUser());
+
+                message.setObject(e);
+                messageProducer.send(message);
+                messageProducer.close();
+                connection.close();
+
+                response.sendRedirect("StartPage");
 
             } catch (JMSException ex) {
                 ex.printStackTrace();
             }
         }
+        
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BankAccountMsg</title>");
+            out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BankAccountMsg at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Param: " + request.getParameter("name") + "</h1>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
             out.println("</body>");
             out.println("</html>");
         } finally {
             out.close();
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

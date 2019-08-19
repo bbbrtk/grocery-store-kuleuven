@@ -88,20 +88,24 @@ public class UncountableMsg extends HttpServlet {
                 e.setName(name);
                 e.setCountry(country);
 
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = formatter.parse(overdue);
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//                Date date = formatter.parse(overdue);
+                Date date = (Date) request.getAttribute("overdueA");
                 e.setOverdue(date);
 
-                double quantityDouble = Double.parseDouble(quantity);
-                e.setQuantity(quantityDouble);
+//                double quantityDouble = Double.parseDouble(quantity);
+                double qunatityDouble = (Double) request.getAttribute("quantityA");
+                e.setQuantity(qunatityDouble);
 
-                if ("KG".equals(unit)) {
-                    e.setUnit(Unit.KG);
-                } else if ("DAG".equals(unit)) {
-                    e.setUnit(Unit.DAG);
-                } else {
-                    e.setUnit(Unit.POUND);
-                }
+//                if ("BIG".equals(size)) {
+//                    e.setSize(Size.BIG);
+//                } else if ("MEDIUM".equals(size)) {
+//                    e.setSize(Size.MEDIUM);
+//                } else {
+//                    e.setSize(Size.SMALL);
+//                }
+                
+                e.setUnit((Unit)request.getAttribute("unitA"));
 
                 double priceDouble = Double.parseDouble(pricePerWeight);
                 e.setPricePerWeight(priceDouble);
@@ -120,14 +124,15 @@ public class UncountableMsg extends HttpServlet {
         }
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CountableMsg</title>");
+            out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CountableMsg at " + request.getContextPath() + "</h1>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
             out.println("</body>");
             out.println("</html>");
         } finally {

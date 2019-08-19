@@ -8,6 +8,7 @@ package ejb.session;
 import ejb.Basket;
 import ejb.User;
 import javax.ejb.Local;
+import javax.servlet.http.HttpSessionEvent;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface ManagementStatefulBeanLocal {
 
+    public static int counter = 0;
     public static User user = null;
     public static String login = "";
     public static String basketName = "";
@@ -28,7 +30,11 @@ public interface ManagementStatefulBeanLocal {
     public User getCurrentUser();
 
     public Basket getCurrentBasket();
-  
+
     public void storeUserData(String login);
+    
+    public void clearState() ;
+
+
 
 }

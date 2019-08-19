@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.msg;
 
-import ejb.BankAccount;
-import ejb.Basket;
-import ejb.UserFacade;
-import ejb.interceptor.SingletonSessionStateLocal;
 import ejb.session.ManagementStatefulBeanLocal;
-import ejb.timer.UserLogoutTimerLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,20 +19,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "myBasketsShow", urlPatterns = {"/myBasketsShow"})
-public class myBasketsShow extends HttpServlet {
+@WebServlet(name = "UserLogout", urlPatterns = {"/UserLogout"})
+public class UserLogout extends HttpServlet {
 
-    @EJB
-    private UserLogoutTimerLocal userLogoutTimer;
-
-    @EJB
+        @EJB
     private ManagementStatefulBeanLocal msb;
-    @EJB
-    private SingletonSessionStateLocal sssl;
-
-    @EJB
-    private UserFacade userFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,21 +36,15 @@ public class myBasketsShow extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        if (msb.getCurrentUser() == null) {
-            RequestDispatcher view = request.getRequestDispatcher("login/newlogin.html");
-            view.forward(request, response);
-        } else {
-            request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
-            request.setAttribute("userId", msb.getCurrentUser().getId());
-            request.setAttribute("timerStatus", userLogoutTimer.getCounter());
-            request.setAttribute("basketList", userFacade.myBasketsName(msb.getCurrentUser().getId()));
-            request.setAttribute("tasks", sssl.getActions());
-
-//            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );
-            RequestDispatcher view = request.getRequestDispatcher("show/showBasket.jsp");
-            view.forward(request, response);
-        }
+        
+//        msb.resetUser();
+//        msb.resetBasket();
+        
+        msb.storeUser(null);
+        msb.storeBasket(null);
+        
+        response.sendRedirect("/NewsApp-war/login/newlogin.html");
+        
 
     }
 

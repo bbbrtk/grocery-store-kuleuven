@@ -38,8 +38,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetUserBankMsg", urlPatterns = {"/SetUserBankMsg"})
-public class SetUserBankMsg extends HttpServlet {
+@WebServlet(name = "SetBankOrBasketMsg", urlPatterns = {"/SetBankOrBasketMsg"})
+public class SetBankOrBasketMsg extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
@@ -49,6 +49,9 @@ public class SetUserBankMsg extends HttpServlet {
 
     @EJB
     private UserFacade userFacade;
+
+    @EJB
+    private BasketFacade basketFacade;
 
 //    @PersistenceContext(unitName = "NewsApp-ejbPU")
 //    private EntityManager em;
@@ -63,51 +66,73 @@ public class SetUserBankMsg extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
+
         
         String name = request.getParameter("name");
+        
+        String basketName = request.getParameter("basketName");
 
-        if (name != null) {
+        if (name==null) name = "";
+        if (basketName==null) basketName = "";
+        
+        if (!name.equals("")) {
 
             List banks = bankAccountFacade.findAll();
             for (Iterator it = banks.iterator(); it.hasNext();) {
                 BankAccount elem = (BankAccount) it.next();
 
                 if (elem.getBankName().equals(name)) {
-                           
-                            List<User> userList = new ArrayList();
-                            userList.add(msb.getCurrentUser());
-                            elem.setListOfUsers(userList);
 
-                            List<BankAccount> banksList = new ArrayList();
-                            banksList.add(elem);
-                            msb.getCurrentUser().setBankAccounts(banksList);
+                    List<User> userList = new ArrayList();
+                    userList.add(msb.getCurrentUser());
+                    elem.setListOfUsers(userList);
 
-                            bankAccountFacade.edit(elem);
-                            userFacade.edit(msb.getCurrentUser());
+                    List<BankAccount> banksList = new ArrayList();
+                    banksList.add(elem);
+                    msb.getCurrentUser().setBankAccounts(banksList);
+
+                    bankAccountFacade.edit(elem);
+                    userFacade.edit(msb.getCurrentUser());
+                    break;
                 }
             }
+            System.out.println("--- new account --- " + name);
+            
+        } else if (!basketName.equals("")) {
+
+            List banks = basketFacade.findAll();
+            for (Iterator it = banks.iterator(); it.hasNext();) {
+                Basket elem = (Basket) it.next();
+                if (elem.getName().equals(basketName)) {
+                    elem.setUser(msb.getCurrentUser());
+                    basketFacade.edit(elem);
+                    msb.storeBasket(elem);
+                    break;
+                }
+            }
+            
+            System.out.println("--- current basket --- " + msb.getCurrentBasket().getName() + " =?= " + basketName);
         }
-
-        response.sendRedirect("ListNews");
-
+        
         PrintWriter out = response.getWriter();
-
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SetUserBankMsg</title>");
+            out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SetUserBankMsg at " + request.getContextPath() + "</h1>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
             out.println("</body>");
             out.println("</html>");
         } finally {
             out.close();
         }
+
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
