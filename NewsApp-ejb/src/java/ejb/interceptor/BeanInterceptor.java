@@ -14,17 +14,16 @@ import javax.interceptor.InvocationContext;
  */
 public class BeanInterceptor {
     
-    private int users = 0;
+    private int actions = 0;
     
     @AroundInvoke
     public Object intercept(InvocationContext context) throws Exception {
- 
-        System.out.println("SimpleInterceptor - Logging BEFORE calling method :"+context.getMethod().getName() );
- 
+        
+        System.out.println("Interceptor: \t ejb.UserMessage.onMessage  \t " + context.getMethod().getName() );
         Object result = context.proceed();
-        users++;
+        actions++;
  
-        System.out.println("SimpleInterceptor | users: " + users + " -  AFTER:" + context.getMethod().getName() );
+        System.out.println("Interceptor: \t Performed actions:  \t " + actions );
  
         return result;
     }

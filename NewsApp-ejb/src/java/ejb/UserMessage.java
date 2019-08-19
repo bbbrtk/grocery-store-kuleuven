@@ -5,12 +5,14 @@
  */
 package ejb;
 
+import ejb.interceptor.BeanInterceptor;
 import ejb.session.ManagementStatefulBeanLocal;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
+import javax.interceptor.Interceptors;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -41,6 +43,7 @@ public class UserMessage implements MessageListener {
     }
 
     @Override
+    @Interceptors(BeanInterceptor.class)
     public void onMessage(Message message) {
 
         ObjectMessage msg = null;
@@ -48,8 +51,6 @@ public class UserMessage implements MessageListener {
             if (message instanceof ObjectMessage) {
                 msg = (ObjectMessage) message;
                 Object e;
-
-                System.out.println("--- ejb.UserMessage.onMessage  --- ");
 
                 if (msg.getObject().getClass() == new User().getClass()) {
                     e = (User) msg.getObject();

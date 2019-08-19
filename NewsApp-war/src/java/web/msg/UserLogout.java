@@ -43,7 +43,7 @@ public class UserLogout extends HttpServlet {
         msb.storeUser(null);
         msb.storeBasket(null);
         
-        response.sendRedirect("login/newlogin.html");
+        response.sendRedirect("/NewsApp-war/login/newlogin.html");
         
 
     }

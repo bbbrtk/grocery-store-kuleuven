@@ -134,22 +134,22 @@ and open the template in the editor.
                             <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="dashboard">
-                                    <li><a href="#">Show your baskets</a></li>
+                                    <li><a href="/NewsApp-war/myBasketsShow">Show your baskets</a></li>
                                     <li><a href="/NewsApp-war/addBankOrBasket">Add new basket</a></li>
-                                    <li><a href="#">Switch basket</a></li>
+                                    <li><a href="/NewsApp-war/SetBankOrBasket">Set basket</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
                                 <ul  class="sub-menu collapse" id="e-commerce" >
-                                    <li><a href=""> All Items</a></li>
-                                    <li><a href=""> Your Items</a></li>
+                                    <li><a href="/NewsApp-war/AllItemShow"> All Items</a></li>
+                                    <li><a href="/NewsApp-war/MyItemShow"> Your Items</a></li>
                                     <li><a href="https://www.ebay.com/"> New offer </a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Bank Accounts</span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="products">
-                                    <li><a href="#">Show accounts</a></li>
-                                    <li><a href="#">Set new account</a></li>
+                                    <li><a href="/NewsApp-war/myBankShow">Show accounts</a></li>
+                                    <li><a href="/NewsApp-war/SetBankOrBasket">Set new account</a></li>
                                     <li><a href="/NewsApp-war/addBankOrBasket">Create new account</a></li>
                                     <li><a href="http://bankbelgium.com/">Bank Belgium</a></li>
                                     <li><a href="https://www.kbc.com/en">KBC</a></li>

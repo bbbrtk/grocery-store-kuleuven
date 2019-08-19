@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.msg;
+package web;
 
-import ejb.BankAccountFacade;
 import ejb.UserFacade;
 import ejb.session.ManagementStatefulBeanLocal;
+import ejb.timer.UserLogoutTimerLocal;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,14 +22,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetUserBasketMsg", urlPatterns = {"/SetUserBasketMsg"})
-public class SetUserBasketMsg extends HttpServlet {
+@WebServlet(name = "myBankShow", urlPatterns = {"/myBankShow"})
+public class myBankShow extends HttpServlet {
+
+    @EJB
+    private UserLogoutTimerLocal userLogoutTimer;
 
     @EJB
     private ManagementStatefulBeanLocal msb;
-
-    @EJB
-    private BankAccountFacade bankAccountFacade;
 
     @EJB
     private UserFacade userFacade;
@@ -45,15 +46,17 @@ public class SetUserBasketMsg extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         if (msb.getCurrentUser() == null) {
-            RequestDispatcher view = request.getRequestDispatcher("login/login.html");
+            RequestDispatcher view = request.getRequestDispatcher("login/newlogin.html");
             view.forward(request, response);
         } else {
             request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
             request.setAttribute("userId", msb.getCurrentUser().getId());
+            request.setAttribute("timerStatus", userLogoutTimer.getCounter());
+            request.setAttribute("basketList", userFacade.myBankAccounts(msb.getCurrentUser().getId()));
 
-            RequestDispatcher view = request.getRequestDispatcher("start/startjsp.jsp");
+//            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );
+            RequestDispatcher view = request.getRequestDispatcher("show/showBank.jsp");
             view.forward(request, response);
         }
     }

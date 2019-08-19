@@ -131,7 +131,6 @@ and open the template in the editor.
                             </div>
                         </div>
                         <ul class="list-sidebar bg-defoult">
-                            <li> <a href="#"><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
                             <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="dashboard">
@@ -163,7 +162,7 @@ and open the template in the editor.
                                     <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
                                 </ul>
                             </li>
-                            <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-chevron-down"></i>                               
+                            <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-warning"></i>                               
                                     <span class="nav-label">Log out</span> 
                                 </a></li>
                             <li> <i class="fa fa-files-o"></i> 
@@ -182,6 +181,52 @@ and open the template in the editor.
     <th>
     <div>
         <p style="width:700px" ></p>
+
+        <!--                            
+                                  --------------
+                                   MAIN SECTION
+                                  --------------
+        -->
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <form method="post" action="/NewsApp-war/SetBankOrBasketMsg">
+                    <input id="bank" type="radio" name="tab" class="sign-in" checked><label for="bank" class="tab">set your new Account</label>
+                    <input id="basket" type="radio" name="tab" class="for-pwd"><label for="basket" class="tab">set your new Basket</label>
+                    <div class="login-form">
+                        <div class="sign-in-htm">
+                            <div class="group">
+                                <label for="name" class="label">Bank Account Name</label>
+                                <input name="name" id="name" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Set account">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                        <div class="for-pwd-htm">
+                            <div class="group">
+                                <label for="basketName" class="label">Basket name</label>
+                                <input name="basketName" id="basketName" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Set basket">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<p style="height: 800px" ></p>-->
+        </div>
+
+        <!--                            
+                                   ----------------
+                                    END OF SECTION
+                                   ----------------
+        -->
+
+
     </div>
 </th>
 </tr>
