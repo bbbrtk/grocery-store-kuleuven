@@ -62,6 +62,25 @@ public class UserPasswordMsg extends HttpServlet {
             }
         }
         
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Exception Message</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

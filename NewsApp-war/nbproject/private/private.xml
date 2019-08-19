@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/msg/BasketMsg.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/setUserBasket.html</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/msg/SetUserBasketMsg.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/ListNews.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/msg/SetUserBankMsg.java</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/setUserBank.html</file>
-            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/msg/UserMsg.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/add/addItem.jsp</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/login/logincss.css</file>
             <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/src/java/web/myBasketsShow.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/add/addBankOrBasket.jsp</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-war/web/start/startjsp.jsp</file>
         </group>
     </open-files>
 </project-private>

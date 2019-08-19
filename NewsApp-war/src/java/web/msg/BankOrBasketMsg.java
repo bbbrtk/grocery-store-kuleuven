@@ -116,6 +116,23 @@ public class BankOrBasketMsg extends HttpServlet {
                 ex.printStackTrace();
             }
         }
+        
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Error Message</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
 
     }
 

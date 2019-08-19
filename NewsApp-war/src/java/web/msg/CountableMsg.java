@@ -8,10 +8,13 @@ package web.msg;
 import ejb.Basket;
 import ejb.BasketFacade;
 import ejb.Countable;
+import ejb.Item;
 import ejb.ManageStatefulBean;
+import ejb.Uncountable;
 import ejb.User;
 import ejb.UserFacade;
 import ejb.enumeration.Size;
+import ejb.enumeration.Unit;
 import ejb.session.ManagementStatefulBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,8 +78,10 @@ public class CountableMsg extends HttpServlet {
         String quantity = request.getParameter("quantity");
         String size = request.getParameter("size");
         String price = request.getParameter("price");
+        String unit = request.getParameter("unit");
+        String pricePerWeight = request.getParameter("pricePer");
 
-        if ((name != null) && (country != null) && (overdue != null) && (quantity != null) && (size != null) && (price != null)) {
+        if ((name != null) && (country != null) && (overdue != null) && (quantity != null)) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -84,35 +89,84 @@ public class CountableMsg extends HttpServlet {
 
                 ObjectMessage message = session.createObjectMessage();
 
-                Countable e = new Countable();
-                e.setName(name);
-                e.setCountry(country);
+                if ((size != null) && (price != null)) {
+                    Countable e = new Countable();
+                    e.setName(name);
+                    e.setCountry(country);
 
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = formatter.parse(overdue);
-                e.setOverdue(date);
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//                Date date = formatter.parse(overdue);
+                    Date date = (Date) request.getAttribute("overdueA");
+                    e.setOverdue(date);
 
-                double quantityDouble = Double.parseDouble(quantity);
-                e.setQuantity(quantityDouble);
+//                double quantityDouble = Double.parseDouble(quantity);
+                    double qunatityDouble = (Double) request.getAttribute("quantityA");
+                    e.setQuantity(qunatityDouble);
 
-                if ("BIG".equals(size)) {
-                    e.setSize(Size.BIG);
-                } else if ("MEDIUM".equals(size)) {
-                    e.setSize(Size.MEDIUM);
-                } else {
-                    e.setSize(Size.SMALL);
+//                if ("BIG".equals(size)) {
+//                    e.setSize(Size.BIG);
+//                } else if ("MEDIUM".equals(size)) {
+//                    e.setSize(Size.MEDIUM);
+//                } else {
+//                    e.setSize(Size.SMALL);
+//                }
+                    e.setSize((Size) request.getAttribute("sizeA"));
+
+                    double priceD;
+                    if (price.equals("")) {
+                        priceD = 19;
+                    } else {
+                        priceD = Double.parseDouble(price);
+                    }
+                    e.setPrice(priceD);
+
+                    e.setBasket(msb.getCurrentBasket());
+
+                    message.setObject(e);
+                    messageProducer.send(message);
+                    messageProducer.close();
+                    connection.close();
+                    response.sendRedirect("StartPage");
+
+                } else if ((unit != null) && (pricePerWeight != null)) {
+                    Uncountable e = new Uncountable();
+                    e.setName(name);
+                    e.setCountry(country);
+
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//                Date date = formatter.parse(overdue);
+                    Date date = (Date) request.getAttribute("overdueA");
+                    e.setOverdue(date);
+
+//                double quantityDouble = Double.parseDouble(quantity);
+                    double qunatityDouble = (Double) request.getAttribute("quantityA");
+                    e.setQuantity(qunatityDouble);
+
+//                if ("BIG".equals(size)) {
+//                    e.setSize(Size.BIG);
+//                } else if ("MEDIUM".equals(size)) {
+//                    e.setSize(Size.MEDIUM);
+//                } else {
+//                    e.setSize(Size.SMALL);
+//                }
+                    e.setUnit((Unit) request.getAttribute("unitA"));
+
+                    double priceD2;
+                    if (pricePerWeight.equals("")) {
+                        priceD2 = 19;
+                    } else {
+                        priceD2 = Double.parseDouble(pricePerWeight);
+                    }
+                    e.setPricePerWeight(priceD2);
+
+                    e.setBasket(msb.getCurrentBasket());
+
+                    message.setObject(e);
+                    messageProducer.send(message);
+                    messageProducer.close();
+                    connection.close();
+                    response.sendRedirect("StartPage");
                 }
-
-                double priceDouble = Double.parseDouble(price);
-                e.setPrice(priceDouble);
-                
-                e.setBasket(msb.getCurrentBasket());
-
-                message.setObject(e);
-                messageProducer.send(message);
-                messageProducer.close();
-                connection.close();
-                response.sendRedirect("ListNews");
 
             } catch (JMSException ex) {
                 ex.printStackTrace();
@@ -120,14 +174,15 @@ public class CountableMsg extends HttpServlet {
         }
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CountableMsg</title>");
+            out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CountableMsg at " + request.getContextPath() + "</h1>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
             out.println("</body>");
             out.println("</html>");
         } finally {

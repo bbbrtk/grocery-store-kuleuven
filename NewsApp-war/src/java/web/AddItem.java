@@ -5,7 +5,6 @@
  */
 package web;
 
-import ejb.UserFacade;
 import ejb.interceptor.SingletonSessionStateLocal;
 import ejb.session.ManagementStatefulBeanLocal;
 import ejb.timer.UserLogoutTimerLocal;
@@ -23,20 +22,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "myBankShow", urlPatterns = {"/myBankShow"})
-public class myBankShow extends HttpServlet {
-
-    @EJB
-    private UserLogoutTimerLocal userLogoutTimer;
+@WebServlet(name = "AddItem", urlPatterns = {"/AddItem"})
+public class AddItem extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
+
+    @EJB
+    private UserLogoutTimerLocal userLogoutTimer;
+    
     @EJB
     private SingletonSessionStateLocal sssl;
-
-    @EJB
-    private UserFacade userFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,6 +45,7 @@ public class myBankShow extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         if (msb.getCurrentUser() == null) {
             RequestDispatcher view = request.getRequestDispatcher("login/newlogin.html");
             view.forward(request, response);
@@ -56,11 +53,9 @@ public class myBankShow extends HttpServlet {
             request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
             request.setAttribute("userId", msb.getCurrentUser().getId());
             request.setAttribute("timerStatus", userLogoutTimer.getCounter());
-            request.setAttribute("basketList", userFacade.myBankAccounts(msb.getCurrentUser().getId()));
             request.setAttribute("tasks", sssl.getActions());
 
-//            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );
-            RequestDispatcher view = request.getRequestDispatcher("show/showBank.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("add/addItem.jsp");
             view.forward(request, response);
         }
     }

@@ -5,6 +5,7 @@
  */
 package web;
 
+import ejb.interceptor.SingletonSessionStateLocal;
 import ejb.session.ManagementStatefulBeanLocal;
 import ejb.timer.UserLogoutTimerLocal;
 import java.io.IOException;
@@ -29,6 +30,9 @@ public class StartPage extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
+    
+        @EJB
+    private SingletonSessionStateLocal sssl;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,6 +54,7 @@ public class StartPage extends HttpServlet {
             request.setAttribute("userLogin", msb.getCurrentUser().getLogin());
             request.setAttribute("userId", msb.getCurrentUser().getId());
             request.setAttribute("timerStatus", userLogoutTimer.getCounter());
+            request.setAttribute("tasks", sssl.getActions());
 
             RequestDispatcher view = request.getRequestDispatcher("start/startjsp.jsp");
             view.forward(request, response);

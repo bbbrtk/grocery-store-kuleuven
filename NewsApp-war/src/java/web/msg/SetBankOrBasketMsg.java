@@ -115,8 +115,23 @@ public class SetBankOrBasketMsg extends HttpServlet {
             
             System.out.println("--- current basket --- " + msb.getCurrentBasket().getName() + " =?= " + basketName);
         }
-
-        response.sendRedirect("StartPage");
+        
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Error Message</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
 
     }
 

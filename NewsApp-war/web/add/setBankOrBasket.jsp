@@ -57,7 +57,7 @@ and open the template in the editor.
                                                         <img src="http://via.placeholder.com/160x160" class="rounded-circle  " alt="User Image">
                                                     </div>
                                                     <h4>
-                                                        <%= request.getAttribute("timerStatus")%> / 300 seconds
+                                                        <%= request.getAttribute("timerStatus")%> sec. to logout
                                                         <small><i class="fa fa-clock-o"></i> Now </small>
                                                     </h4>
                                                     <p>Logout when time passes</p>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                                     </div>
                                                     <h4>
                                                         Session started
-                                                        <small><i class="fa fa-clock-o"></i>On startup</small>
+                                                        <small><i class="fa fa-clock-o"></i> On startup</small>
                                                     </h4>
                                                     <p>Timer started</p>
                                                 </a>
@@ -85,23 +85,22 @@ and open the template in the editor.
                         <li class="nav-item dropdown notifications-menu">
                             <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="label label-warning bg-warning">10</span>
+                                <span class="label label-warning bg-warning"><%= request.getAttribute("tasks")%></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <ul class="dropdown-menu-over list-unstyled">
-                                    <li class="header-ul text-center">You have 10 notifications</li>
+                                    <li class="header-ul text-center">Server session status</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu list-unstyled">
                                             <li>
                                                 <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                    <i class="fa fa-users text-aqua"></i> Users performed <%= request.getAttribute("tasks")%> tasks
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                                    page and may cause design problems
+                                                    <i class="fa fa-warning text-yellow"></i> Server started
                                                 </a>
                                             </li>
                                         </ul>
@@ -131,6 +130,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <ul class="list-sidebar bg-defoult">
+                            <li> <a href="#"><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
                             <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="dashboard">
@@ -162,11 +162,11 @@ and open the template in the editor.
                                     <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
                                 </ul>
                             </li>
-                            <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-warning"></i>                               
+                            <li> <a href="/NewsApp-war/UserLogout"><i class="fa fa-chevron-down"></i>                               
                                     <span class="nav-label">Log out</span> 
                                 </a></li>
                             <li> <i class="fa fa-files-o"></i> 
-                                <div style="width:10px;height:400px;"></div>
+                                <div style="width:10px;height:650px;"></div>
                             </li>
                         </ul>
                     </div>

@@ -75,7 +75,7 @@ public class UserMsg extends HttpServlet {
         String loginRegister = "";
         loginRegister = request.getParameter("loginRegister");
         Boolean userExist = false;
-        
+
         System.out.println("------ login: " + login);
         System.out.println("------ pwd  : " + password);
         System.out.println("-------------- reg  : " + loginRegister);
@@ -89,9 +89,8 @@ public class UserMsg extends HttpServlet {
                 userExist = true;
                 response.sendRedirect("StartPage"); //StartPage
                 break;
-                
-            } 
-            else if ( (elem.getLogin().equals(loginRegister)) || (elem.getLogin().equals(login)) ){
+
+            } else if ((elem.getLogin().equals(loginRegister)) || (elem.getLogin().equals(login))) {
                 userExist = true;
                 response.sendRedirect("login/login.html");
                 break;
@@ -117,14 +116,30 @@ public class UserMsg extends HttpServlet {
                 messageProducer.close();
                 connection.close();
 
-                response.sendRedirect("StartPage"); 
+                response.sendRedirect("StartPage");
 
             } catch (JMSException ex) {
                 ex.printStackTrace();
             }
-        } 
-        else if (!userExist) {
+        } else if (!userExist) {
             response.sendRedirect("login/login.html");
+        }
+
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Error Message</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p> [InputException handled]/p>");
+            out.println("<p> Empty or incorrect input</p>");
+            out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
+            out.println("<br><br>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
         }
 
     }
