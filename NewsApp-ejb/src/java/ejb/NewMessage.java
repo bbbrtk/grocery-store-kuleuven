@@ -5,12 +5,14 @@
 
 package ejb;
 
+import ejb.interceptor.BeanInterceptor;
 import ejb.session.ManagementStatefulBeanLocal;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
+import javax.interceptor.Interceptors;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -22,6 +24,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author nb
  */
+@Interceptors(BeanInterceptor.class)
 @MessageDriven(mappedName = "jms/NewMessage", activationConfig =  {
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
@@ -49,7 +52,7 @@ public class NewMessage implements MessageListener {
             msg = (ObjectMessage) message;
                 Object e;
 
-                System.out.println("--- ejb.UserMessage.onMessage  --- ");
+                System.out.println("--- ejb.NewMessage.onMessage  --- ");
 
                 if (msg.getObject().getClass() == new User().getClass()) {
                     e = (User) msg.getObject();
