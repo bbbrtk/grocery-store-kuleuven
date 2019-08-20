@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,6 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_account")
+@XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +50,7 @@ public class User implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "bankAccount_id"))
     private List<BankAccount> bankAccounts;
 
+    @XmlTransient
     public List<Basket> getListOfMyBaskets() {
         return listOfMyBaskets;
     }
@@ -55,6 +59,7 @@ public class User implements Serializable {
         this.listOfMyBaskets = listOfMyBaskets;
     }
 
+    @XmlTransient
     public List<BankAccount> getBankAccounts() {
         return bankAccounts;
     }

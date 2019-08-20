@@ -61,6 +61,7 @@ public class myBasketsShow extends HttpServlet {
             request.setAttribute("userId", msb.getCurrentUser().getId());
             request.setAttribute("timerStatus", userLogoutTimer.getCounter());
             request.setAttribute("basketList", userFacade.myBasketsName(msb.getCurrentUser().getId()));
+            request.setAttribute("basketListId", userFacade.myBasketsId(msb.getCurrentUser().getId()));
             request.setAttribute("tasks", sssl.getActions());
 
 //            System.out.println("--- my baskets: " + userFacade.myBankAccounts(msb.getCurrentUser().getId()) );

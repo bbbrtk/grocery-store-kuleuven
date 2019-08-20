@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
+    <service name="BankSoapWebService">
+      <implementation-class>soap.BankSoapWebService</implementation-class>
+    </service>
     <service name="UserSoapWebService">
       <implementation-class>soap.UserSoapWebService</implementation-class>
-    </service>
-    <service name="ItemSoapWebService">
-      <implementation-class>soap.ItemSoapWebService</implementation-class>
     </service>
     <service name="BasketSoapWebService">
       <implementation-class>soap.BasketSoapWebService</implementation-class>
     </service>
-    <service name="BankSoapWebService">
-      <implementation-class>soap.BankSoapWebService</implementation-class>
+    <service name="ItemSoapWebService">
+      <implementation-class>soap.ItemSoapWebService</implementation-class>
     </service>
   </services>
   <clients>

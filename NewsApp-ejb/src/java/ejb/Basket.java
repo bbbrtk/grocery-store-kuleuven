@@ -17,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,6 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "baskets")
+@XmlRootElement
 public class Basket implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,6 +60,7 @@ public class Basket implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public List<Item> getListOfMyItems() {
         return listOfMyItems;
     }

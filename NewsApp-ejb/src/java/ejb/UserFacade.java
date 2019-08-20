@@ -44,6 +44,13 @@ public class UserFacade extends AbstractFacade<User> {
         return list;
     }
     
+    public List<String> myBasketsId (Long id) {
+        Query q = em.createNativeQuery("select ID from BASKETS where USER_ID = ?");
+        q.setParameter(1, id);
+        List<String> list = q.getResultList();
+        return list;
+    }
+    
     public List<Item> myItems(Long id) {
         Query q = em.createNativeQuery("select * from ITEM where BASKET_ID in (select ID from BASKETS where USER_ID = ?)");
         q.setParameter(1, id);
@@ -60,6 +67,13 @@ public class UserFacade extends AbstractFacade<User> {
     
     public List<String> myBankAccounts(Long id) {
         Query q = em.createNativeQuery("select BANKNAME from BANKS, USER_BANKACCOUNT where ((ID=BANKACCOUNT_ID) and (USER_ID = ?))");
+        q.setParameter(1, id);
+        List<String> list = q.getResultList();
+        return list;
+    }
+    
+    public List<String> myBankAccountsId(Long id) {
+        Query q = em.createNativeQuery("select ID from BANKS, USER_BANKACCOUNT where ((ID=BANKACCOUNT_ID) and (USER_ID = ?))");
         q.setParameter(1, id);
         List<String> list = q.getResultList();
         return list;
