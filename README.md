@@ -13,7 +13,7 @@
 
 
 ### Project Description
-
+The applications could be used to management and use of grocery store. Users can create and keep money on BankAccounts, can create and use Baskets, in which Items are stored. Every user has login and password to access app services and is set to one or more BankAccounts and one or more Baskets. Every BankAccount can be accessed from one or more users. Each Basket is bound with only one User, but it can be reused by another user later. Each Item has name, country of origin, overdue date, quantity and one of two types: Countable or Uncountable. Countable item has a one of three definied sizes and price. Instead, Uncountable has unit and price per weight. Users can sign in, sign up or register in service. Each session lasts 300sec., user can modified/edit own atributes (as password or baskets/accounts) and check how many tasks were made in session for all users. Users can also check details about each product.
 
 ### How to run an app
 1. Download ZIP archive from Github
