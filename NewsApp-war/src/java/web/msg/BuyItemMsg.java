@@ -5,10 +5,12 @@
  */
 package web.msg;
 
+import ejb.Item;
 import ejb.BankAccount;
 import ejb.BankAccountFacade;
 import ejb.Basket;
 import ejb.BasketFacade;
+import ejb.ItemFacade;
 import ejb.User;
 import ejb.UserFacade;
 import ejb.session.ManagementStatefulBeanLocal;
@@ -17,17 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bartek
  */
-@WebServlet(name = "SetBankOrBasketMsg", urlPatterns = {"/SetBankOrBasketMsg"})
-public class SetBankOrBasketMsg extends HttpServlet {
+@WebServlet(name = "BuyItemMsg", urlPatterns = {"/BuyItemMsg"})
+public class BuyItemMsg extends HttpServlet {
 
     @EJB
     private ManagementStatefulBeanLocal msb;
@@ -53,8 +45,9 @@ public class SetBankOrBasketMsg extends HttpServlet {
     @EJB
     private BasketFacade basketFacade;
 
-//    @PersistenceContext(unitName = "NewsApp-ejbPU")
-//    private EntityManager em;
+    @EJB
+    private ItemFacade itemFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -69,54 +62,41 @@ public class SetBankOrBasketMsg extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
 
-        
         String name = request.getParameter("name");
-        
-        String basketName = request.getParameter("basketName");
 
-        if (name==null) name = "";
-        if (basketName==null) basketName = "";
-        
-        if (!name.equals("")) {
-
-            List banks = bankAccountFacade.findAll();
-            for (Iterator it = banks.iterator(); it.hasNext();) {
-                BankAccount elem = (BankAccount) it.next();
-                if (elem.getBankName().equals(name)) {
-
-                    List<User> userList = new ArrayList();
-                    userList.add(msb.getCurrentUser());
-                    elem.setListOfUsers(userList);
-
-                    List<BankAccount> banksList = new ArrayList();
-                    banksList.add(elem);
-                    msb.getCurrentUser().setBankAccounts(banksList);
-
-                    bankAccountFacade.edit(elem);
-                    userFacade.edit(msb.getCurrentUser());
-                    break;
-                }
-            }
-            System.out.println("--- new account --- " + name);
-            response.sendRedirect("StartPage"); 
-            
-        } else if (!basketName.equals("")) {
-
-            List banks = basketFacade.findAll();
-            for (Iterator it = banks.iterator(); it.hasNext();) {
-                Basket elem = (Basket) it.next();
-                if (elem.getName().equals(basketName)) {
-                    elem.setUser(msb.getCurrentUser());
-                    basketFacade.edit(elem);
-                    msb.storeBasket(elem);
-                    break;
-                }
-            }
-            
-            System.out.println("--- current basket --- " + msb.getCurrentBasket().getName() + " =?= " + basketName);
-            response.sendRedirect("StartPage"); 
+        if (name == null) {
+            name = "";
         }
-        
+        if (!name.equals("") && msb.getCurrentBasket()!=null) {
+
+            List items = itemFacade.findAll();
+            for (Iterator it = items.iterator(); it.hasNext();) {
+                Item elem = (Item) it.next();
+
+                if (elem.getName().equals(name)) {
+
+                    List baskets = basketFacade.findAll();
+                    for (Iterator it2 = baskets.iterator(); it2.hasNext();) {
+                        Basket elem2 = (Basket) it2.next();
+                        if (elem2.getName().equals(msb.getCurrentBasket().getName())) {
+                            elem.setBasket(elem2);
+                            elem.setQuantity(elem.getQuantity()-1.0);
+
+                            itemFacade.edit(elem);
+                            msb.storeBasket(elem2);
+                            
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+            System.out.println("--- buy item --- " + name);
+            response.sendRedirect("StartPage"); 
+
+        }
+
         PrintWriter out = response.getWriter();
         try {
             out.println("<html>");
@@ -136,7 +116,7 @@ public class SetBankOrBasketMsg extends HttpServlet {
 
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

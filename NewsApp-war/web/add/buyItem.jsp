@@ -130,20 +130,19 @@ and open the template in the editor.
                             </div>
                         </div>
                         <ul class="list-sidebar bg-defoult">
-                            <li> <a href="/NewsApp-war/StartPage""><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
-                            <li> <a href="/NewsApp-war/BuyItem""><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
+                            <li> <a href="#"><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
+                            <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="dashboard">
                                     <li><a href="/NewsApp-war/myBasketsShow">Show your baskets</a></li>
-                                    <li><a href="/NewsApp-war/addBankOrBasket">Create and set basket</a></li>
-                                    <li><a href="/NewsApp-war/SetBankOrBasket">Switch basket</a></li>
+                                    <li><a href="/NewsApp-war/addBankOrBasket">Add new basket</a></li>
+                                    <li><a href="/NewsApp-war/SetBankOrBasket">Set basket</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
                                 <ul  class="sub-menu collapse" id="e-commerce" >
                                     <li><a href="/NewsApp-war/AllItemShow"> All Items</a></li>
                                     <li><a href="/NewsApp-war/MyItemShow"> Your Items</a></li>
-                                    <li><a href="/NewsApp-war/AddItem"> Create new item</a></li>
                                     <li><a href="https://www.ebay.com/"> New offer </a></li>
                                 </ul>
                             </li>
@@ -158,7 +157,8 @@ and open the template in the editor.
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#tables" class="collapsed active" ><i class="fa fa-laptop"></i> <span class="nav-label">Settings</span><span class="fa fa-chevron-left pull-right"></span></a>
                                 <ul  class="sub-menu collapse" id="tables" >
-                                    <li><a href="/NewsApp-war/settings/settings.html"> Change Password</a></li>
+                                    <li><a href="/settings/settings.html"> Change Password</a></li>
+                                    <li><a href="/settings/settings.html"> Change Login</a></li>
                                     <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
                                 </ul>
                             </li>
@@ -181,6 +181,48 @@ and open the template in the editor.
     <th>
     <div>
         <p style="width:700px" ></p>
+
+        <!--                            
+                                  --------------
+                                   MAIN SECTION
+                                  --------------
+        -->
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <form method="post" action="/NewsApp-war/BuyItemMsg">
+                    <input id="bank" type="radio" name="tab" class="sign-in" checked><label for="bank" class="tab">Buy Item</label>
+                    <input id="basket" type="radio" name="tab" class="for-pwd"><label for="basket" class="tab">_</label>
+                    <div class="login-form">
+                        <div class="sign-in-htm">
+                            <div class="group">
+                                <label for="name" class="label">Buy Item</label>
+                                <input name="name" id="name" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Buy">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                        <div class="for-pwd-htm">
+                            <div class="group">
+                                <input type="submit" class="button" value="Buy">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<p style="height: 800px" ></p>-->
+        </div>
+
+        <!--                            
+                                   ----------------
+                                    END OF SECTION
+                                   ----------------
+        -->
+
+
     </div>
 </th>
 </tr>

@@ -80,7 +80,7 @@ public class UserSoapWebService {
     }
 
     @WebMethod(operationName = "myItemsName")
-    public List<Item> myItemsName(@WebParam(name = "id") Long id) {
+    public List<String> myItemsName(@WebParam(name = "id") Long id) {
         return ejbRef.myItemsName(id);
     }
 
