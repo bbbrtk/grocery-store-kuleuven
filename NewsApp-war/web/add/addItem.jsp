@@ -31,7 +31,7 @@ and open the template in the editor.
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     </head>
-    <body>
+      <body>
         <header class="header">
             <nav class="navbar navbar-toggleable-md navbar-light pt-0 pb-0 ">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,20 +130,20 @@ and open the template in the editor.
                             </div>
                         </div>
                         <ul class="list-sidebar bg-defoult">
-                            <li> <a href="#"><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
-                            <li> <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
+                            <li> <a href="/NewsApp-war/StartPage""><i class="fa fa-chevron-up"></i> <span class="nav-label">Start</span></a> </li>
+                            <li> <a href="/NewsApp-war/BuyItem""><i class="fa fa-diamond"></i> <span class="nav-label">Buy item</span></a> </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Baskets </span> <span class="fa fa-chevron-left pull-right"></span> </a>
                                 <ul class="sub-menu collapse" id="dashboard">
                                     <li><a href="/NewsApp-war/myBasketsShow">Show your baskets</a></li>
-                                    <li><a href="/NewsApp-war/addBankOrBasket">Add new basket</a></li>
-                                    <li><a href="/NewsApp-war/SetBankOrBasket">Set basket</a></li>
+                                    <li><a href="/NewsApp-war/addBankOrBasket">Create and set basket</a></li>
+                                    <li><a href="/NewsApp-war/SetBankOrBasket">Switch basket</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">Items</span><span class="fa fa-chevron-left pull-right"></span></a>
                                 <ul  class="sub-menu collapse" id="e-commerce" >
                                     <li><a href="/NewsApp-war/AllItemShow"> All Items</a></li>
                                     <li><a href="/NewsApp-war/MyItemShow"> Your Items</a></li>
-                                    <li><a href="https://www.ebay.com/"> New offer </a></li>
+                                    <li><a href="/NewsApp-war/AddItem"> Create new item</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Bank Accounts</span> <span class="fa fa-chevron-left pull-right"></span> </a>
@@ -152,13 +152,11 @@ and open the template in the editor.
                                     <li><a href="/NewsApp-war/SetBankOrBasket">Set new account</a></li>
                                     <li><a href="/NewsApp-war/addBankOrBasket">Create new account</a></li>
                                     <li><a href="http://bankbelgium.com/">Bank Belgium</a></li>
-                                    <li><a href="https://www.kbc.com/en">KBC</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#tables" class="collapsed active" ><i class="fa fa-laptop"></i> <span class="nav-label">Settings</span><span class="fa fa-chevron-left pull-right"></span></a>
                                 <ul  class="sub-menu collapse" id="tables" >
-                                    <li><a href="/settings/settings.html"> Change Password</a></li>
-                                    <li><a href="/settings/settings.html"> Change Login</a></li>
+                                    <li><a href="/NewsApp-war/settings/settings.html"> Change Password</a></li>
                                     <li><a href="/NewsApp-war/UserLogout"> Force Log Out</a></li>
                                 </ul>
                             </li>

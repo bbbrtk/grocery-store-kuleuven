@@ -144,7 +144,6 @@ and open the template in the editor.
                                     <li><a href="/NewsApp-war/AllItemShow"> All Items</a></li>
                                     <li><a href="/NewsApp-war/MyItemShow"> Your Items</a></li>
                                     <li><a href="/NewsApp-war/AddItem"> Create new item</a></li>
-                                    <li><a href="https://www.ebay.com/"> New offer </a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-bar-chart-o"></i> <span class="nav-label">Bank Accounts</span> <span class="fa fa-chevron-left pull-right"></span> </a>
@@ -153,7 +152,6 @@ and open the template in the editor.
                                     <li><a href="/NewsApp-war/SetBankOrBasket">Set new account</a></li>
                                     <li><a href="/NewsApp-war/addBankOrBasket">Create new account</a></li>
                                     <li><a href="http://bankbelgium.com/">Bank Belgium</a></li>
-                                    <li><a href="https://www.kbc.com/en">KBC</a></li>
                                 </ul>
                             </li>
                             <li> <a href="#" data-toggle="collapse" data-target="#tables" class="collapsed active" ><i class="fa fa-laptop"></i> <span class="nav-label">Settings</span><span class="fa fa-chevron-left pull-right"></span></a>
