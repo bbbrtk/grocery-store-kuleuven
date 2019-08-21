@@ -64,9 +64,6 @@ The applications could be used to management and use of grocery store. Users can
 - [x] One SOAP client: **client automatically available**
 - [x] One client for the RESTFul service (Json or XML): **service.RestClient**
 
-### How does it work
-
-
 
 ________
 *Bartosz Sobkowiak : 02/2019-08/2019*
