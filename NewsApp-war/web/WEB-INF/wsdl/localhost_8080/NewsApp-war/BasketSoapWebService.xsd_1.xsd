@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soap/">
 
-<xs:element name="basket" type="tns:basket"/>
-
 <xs:element name="count" type="tns:count"/>
 
 <xs:element name="countResponse" type="tns:countResponse"/>
@@ -22,15 +20,20 @@
 
 <xs:element name="findResponse" type="tns:findResponse"/>
 
-<xs:element name="item" type="tns:item"/>
-
 <xs:element name="remove" type="tns:remove"/>
-
-<xs:element name="user" type="tns:user"/>
 
 <xs:complexType name="create">
 <xs:sequence>
-<xs:element name="entity" type="tns:item" minOccurs="0"/>
+<xs:element name="entity" type="tns:basket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="basket">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="listOfMyItems" type="tns:item" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="user" type="tns:user" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -45,19 +48,22 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="basket">
+<xs:complexType name="user">
 <xs:sequence>
+<xs:element name="bankAccounts" type="tns:bankAccount" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
-<xs:element name="user" type="tns:user" minOccurs="0"/>
+<xs:element name="listOfMyBaskets" type="tns:basket" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="user">
+<xs:complexType name="bankAccount">
 <xs:sequence>
+<xs:element name="bankName" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="login" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="listOfUsers" type="tns:user" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="money" type="xs:double" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -77,19 +83,19 @@
 
 <xs:complexType name="findAllResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:item" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:basket" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="remove">
 <xs:sequence>
-<xs:element name="entity" type="tns:item" minOccurs="0"/>
+<xs:element name="entity" type="tns:basket" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="edit">
 <xs:sequence>
-<xs:element name="entity" type="tns:item" minOccurs="0"/>
+<xs:element name="entity" type="tns:basket" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -101,7 +107,7 @@
 
 <xs:complexType name="findResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:item" minOccurs="0"/>
+<xs:element name="return" type="tns:basket" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -113,7 +119,7 @@
 
 <xs:complexType name="findRangeResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:item" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:basket" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
