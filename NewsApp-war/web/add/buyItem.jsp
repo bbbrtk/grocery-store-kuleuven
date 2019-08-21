@@ -31,7 +31,7 @@ and open the template in the editor.
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     </head>
-    <body>
+      <body>
         <header class="header">
             <nav class="navbar navbar-toggleable-md navbar-light pt-0 pb-0 ">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,6 +179,48 @@ and open the template in the editor.
     <th>
     <div>
         <p style="width:700px" ></p>
+
+        <!--                            
+                                  --------------
+                                   MAIN SECTION
+                                  --------------
+        -->
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <form method="post" action="/NewsApp-war/BuyItemMsg">
+                    <input id="bank" type="radio" name="tab" class="sign-in" checked><label for="bank" class="tab">Buy Item</label>
+                    <input id="basket" type="radio" name="tab" class="for-pwd"><label for="basket" class="tab">_</label>
+                    <div class="login-form">
+                        <div class="sign-in-htm">
+                            <div class="group">
+                                <label for="name" class="label">Buy Item</label>
+                                <input name="name" id="name" type="text" class="input">
+                            </div>
+                            <div class="group">
+                                <input type="submit" class="button" value="Buy">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                        <div class="for-pwd-htm">
+                            <div class="group">
+                                <input type="submit" class="button" value="Buy">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<p style="height: 800px" ></p>-->
+        </div>
+
+        <!--                            
+                                   ----------------
+                                    END OF SECTION
+                                   ----------------
+        -->
+
+
     </div>
 </th>
 </tr>

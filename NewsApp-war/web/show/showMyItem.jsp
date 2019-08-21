@@ -1,3 +1,5 @@
+<%@page import="ejb.Basket"%>
+<%@page import="java.util.List"%>
 <!--
     Author     : Bartosz Sobkowiak
     University : KU Leuven, Belgium
@@ -31,7 +33,7 @@ and open the template in the editor.
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     </head>
-    <body>
+     <body>
         <header class="header">
             <nav class="navbar navbar-toggleable-md navbar-light pt-0 pb-0 ">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,6 +181,54 @@ and open the template in the editor.
     <th>
     <div>
         <p style="width:700px" ></p>
+
+        <!--                            
+                                  --------------
+                                   MAIN SECTION
+                                  --------------
+        -->
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <div class="span7">   
+                    <div class="widget stacked widget-table action-table">
+                        <input id="signin" type="radio" name="tab" class="sign-in" checked><label for="signin" class="tab">My baskets</label>
+                        <div class="widget-content">
+                            <table class="table table-striped table-bordered" style="color: #fff">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Item Name</th>
+                                        <th class="td-actions"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (int i = 0; i < ((List) request.getAttribute("basketList")).size(); i += 1) {%>
+                                    <tr>
+                                        <td> <%= i + 1%>
+                                        </td>
+                                        <td>
+                                            <%=((List) request.getAttribute("basketList")).get(i)%>
+                                        </td>
+                                        <td class="td-actions">
+                                        </td>
+                                        <% }%>
+                                </tbody>
+                            </table>
+                        </div> <!-- /widget-content -->
+                    </div> <!-- /widget -->
+                </div>
+            </div>
+            <!--<p style="height: 800px" ></p>-->
+        </div>
+
+        <!--                            
+                                   ----------------
+                                    END OF SECTION
+                                   ----------------
+        -->
+
+
     </div>
 </th>
 </tr>
