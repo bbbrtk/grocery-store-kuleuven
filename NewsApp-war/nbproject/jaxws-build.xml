@@ -131,37 +131,5 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/bankSoap"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BankSoapWebService"/>
     </target>
-    <target name="wsimport-client-UserSoapWebService_1" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1" destdir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/UserSoapWebService_1/wsdl/localhost_8080/NewsApp-war/UserSoapWebService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/NewsApp-war/UserSoapWebService?wsdl" xnocompile="true" xendorsed="true" package="soap.client">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/UserSoapWebService_1/wsdl/localhost_8080/NewsApp-war/UserSoapWebService.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-UserSoapWebService_1" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/soap/client"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/UserSoapWebService_1"/>
-    </target>
-    <target name="wsimport-client-BasketSoapWebService_1" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1" destdir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BasketSoapWebService_1/wsdl/localhost_8080/NewsApp-war/BasketSoapWebService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/NewsApp-war/BasketSoapWebService?wsdl" xnocompile="true" xendorsed="true" package="ejb">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/BasketSoapWebService_1/wsdl/localhost_8080/NewsApp-war/BasketSoapWebService.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-BasketSoapWebService_1" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/ejb"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/BasketSoapWebService_1"/>
-    </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-UserSoapWebService, wsimport-client-ItemSoapWebService, wsimport-client-BasketSoapWebService, wsimport-client-BankSoapWebService, wsimport-client-UserSoapWebService_1, wsimport-client-BasketSoapWebService_1"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-UserSoapWebService, wsimport-client-ItemSoapWebService, wsimport-client-BasketSoapWebService, wsimport-client-BankSoapWebService"/>
 </project>

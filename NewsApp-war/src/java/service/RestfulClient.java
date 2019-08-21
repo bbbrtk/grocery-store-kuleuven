@@ -96,7 +96,7 @@ public class RestfulClient {
         
         System.out.println("---------------- USERS ---------------------");
         
-        Response response = client.findAll_XML(Response.class);
+        Response response = client.findAll_JSON(Response.class);
 
         GenericType<List<User>> genericType = new GenericType<List<User>>() {
         };
@@ -114,7 +114,7 @@ public class RestfulClient {
         
         System.out.println("---------------- / REMOVE USER / ---------------------\n");
         
-        int idToRemove = 701;
+        int idToRemove = 201;
         client.remove(String.valueOf(idToRemove));
         
         System.out.println("---------------- NUMBER OF USERS ---------------------");

@@ -28,6 +28,27 @@
 <message name="findAllResponse">
 <part name="parameters" element="tns:findAllResponse"/>
 </message>
+<message name="edit">
+<part name="parameters" element="tns:edit"/>
+</message>
+<message name="findRange">
+<part name="parameters" element="tns:findRange"/>
+</message>
+<message name="findRangeResponse">
+<part name="parameters" element="tns:findRangeResponse"/>
+</message>
+<message name="myBasketsName">
+<part name="parameters" element="tns:myBasketsName"/>
+</message>
+<message name="myBasketsNameResponse">
+<part name="parameters" element="tns:myBasketsNameResponse"/>
+</message>
+<message name="myBaskets">
+<part name="parameters" element="tns:myBaskets"/>
+</message>
+<message name="myBasketsResponse">
+<part name="parameters" element="tns:myBasketsResponse"/>
+</message>
 <message name="myItems">
 <part name="parameters" element="tns:myItems"/>
 </message>
@@ -40,32 +61,11 @@
 <message name="myBankAccountsResponse">
 <part name="parameters" element="tns:myBankAccountsResponse"/>
 </message>
-<message name="myBaskets">
-<part name="parameters" element="tns:myBaskets"/>
-</message>
-<message name="myBasketsResponse">
-<part name="parameters" element="tns:myBasketsResponse"/>
-</message>
 <message name="myItemsName">
 <part name="parameters" element="tns:myItemsName"/>
 </message>
 <message name="myItemsNameResponse">
 <part name="parameters" element="tns:myItemsNameResponse"/>
-</message>
-<message name="myBasketsName">
-<part name="parameters" element="tns:myBasketsName"/>
-</message>
-<message name="myBasketsNameResponse">
-<part name="parameters" element="tns:myBasketsNameResponse"/>
-</message>
-<message name="findRange">
-<part name="parameters" element="tns:findRange"/>
-</message>
-<message name="findRangeResponse">
-<part name="parameters" element="tns:findRangeResponse"/>
-</message>
-<message name="edit">
-<part name="parameters" element="tns:edit"/>
 </message>
 <portType name="UserSoapWebService">
 <operation name="remove">
@@ -86,6 +86,21 @@
 <input wsam:Action="http://soap/UserSoapWebService/findAllRequest" message="tns:findAll"/>
 <output wsam:Action="http://soap/UserSoapWebService/findAllResponse" message="tns:findAllResponse"/>
 </operation>
+<operation name="edit">
+<input wsam:Action="http://soap/UserSoapWebService/edit" message="tns:edit"/>
+</operation>
+<operation name="findRange">
+<input wsam:Action="http://soap/UserSoapWebService/findRangeRequest" message="tns:findRange"/>
+<output wsam:Action="http://soap/UserSoapWebService/findRangeResponse" message="tns:findRangeResponse"/>
+</operation>
+<operation name="myBasketsName">
+<input wsam:Action="http://soap/UserSoapWebService/myBasketsNameRequest" message="tns:myBasketsName"/>
+<output wsam:Action="http://soap/UserSoapWebService/myBasketsNameResponse" message="tns:myBasketsNameResponse"/>
+</operation>
+<operation name="myBaskets">
+<input wsam:Action="http://soap/UserSoapWebService/myBasketsRequest" message="tns:myBaskets"/>
+<output wsam:Action="http://soap/UserSoapWebService/myBasketsResponse" message="tns:myBasketsResponse"/>
+</operation>
 <operation name="myItems">
 <input wsam:Action="http://soap/UserSoapWebService/myItemsRequest" message="tns:myItems"/>
 <output wsam:Action="http://soap/UserSoapWebService/myItemsResponse" message="tns:myItemsResponse"/>
@@ -94,24 +109,9 @@
 <input wsam:Action="http://soap/UserSoapWebService/myBankAccountsRequest" message="tns:myBankAccounts"/>
 <output wsam:Action="http://soap/UserSoapWebService/myBankAccountsResponse" message="tns:myBankAccountsResponse"/>
 </operation>
-<operation name="myBaskets">
-<input wsam:Action="http://soap/UserSoapWebService/myBasketsRequest" message="tns:myBaskets"/>
-<output wsam:Action="http://soap/UserSoapWebService/myBasketsResponse" message="tns:myBasketsResponse"/>
-</operation>
 <operation name="myItemsName">
 <input wsam:Action="http://soap/UserSoapWebService/myItemsNameRequest" message="tns:myItemsName"/>
 <output wsam:Action="http://soap/UserSoapWebService/myItemsNameResponse" message="tns:myItemsNameResponse"/>
-</operation>
-<operation name="myBasketsName">
-<input wsam:Action="http://soap/UserSoapWebService/myBasketsNameRequest" message="tns:myBasketsName"/>
-<output wsam:Action="http://soap/UserSoapWebService/myBasketsNameResponse" message="tns:myBasketsNameResponse"/>
-</operation>
-<operation name="findRange">
-<input wsam:Action="http://soap/UserSoapWebService/findRangeRequest" message="tns:findRange"/>
-<output wsam:Action="http://soap/UserSoapWebService/findRangeResponse" message="tns:findRangeResponse"/>
-</operation>
-<operation name="edit">
-<input wsam:Action="http://soap/UserSoapWebService/edit" message="tns:edit"/>
 </operation>
 </portType>
 <binding name="UserSoapWebServicePortBinding" type="tns:UserSoapWebService">
@@ -155,6 +155,39 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="edit">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="findRange">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="myBasketsName">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="myBaskets">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="myItems">
 <soap:operation soapAction=""/>
 <input>
@@ -173,15 +206,6 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="myBaskets">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="myItemsName">
 <soap:operation soapAction=""/>
 <input>
@@ -190,30 +214,6 @@
 <output>
 <soap:body use="literal"/>
 </output>
-</operation>
-<operation name="myBasketsName">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="findRange">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="edit">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
 </operation>
 </binding>
 <service name="UserSoapWebService">
