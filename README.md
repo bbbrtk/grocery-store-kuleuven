@@ -20,13 +20,13 @@ The applications could be used to management and use of grocery store. Users can
 2. Extract archive
 3. Open Netbeans IDE -> File -> Open Project -> open extracted directory as Netbeans project
 4. Load all dependecies (this process usually starts automatically)
-(You may see some warnings with JUnit or with syntax-check in .css files but they do not affect project build and deployment)
+(You may see some warnings with JUnit or with syntax-check in .css files but they do not affect project build, run and deployment)
 5. Set server to Glassfish 4.1, JDK to JDK_1.8, database to jdbc:derby/sample (these steps usually are done automatically) 
 6. Clean and build
 7. Run project
 8. In case of 'Inconsistent state' errors - clean project builds and restart IDE
-9. Enjoy!
-
+9. **Enjoy!**
+10. Depending on version of your browser, it may be necessery to refresh pages (F5) after click in some links or after redirections.
 
 ### Project Expectations
 
@@ -64,5 +64,9 @@ The applications could be used to management and use of grocery store. Users can
 - [x] One SOAP client: **client automatically available**
 - [x] One client for the RESTFul service (Json or XML): **service.RestClient**
 
+### How does it work
+
+
+
 ________
-*Bartosz Sobkowiak : 02-08/2019*
+*Bartosz Sobkowiak : 02/2019-08/2019*
