@@ -30,6 +30,34 @@
 
 
 ## Project Expectations
-- [x] One
+
+#### EJB
+- [x] At least one stateless 
+- [x] stateful EJB session bean
+- [x] At least one Singleton bean: 
+- [x] At least one interceptor
+- [x] At least one timer
+- [x] A MDB (Message Driven Bean) with a Message Queue (and some code that posts a message in the queue)
+- [x] A SOAP web service
+- [x] A RESTFul web service
+
+#### JPA
+- [x] A few entity beans 
+- [x] At leas one one-to-many 
+- [x] At least one many-to-many relationship
+- [x] Corresponding tables
+- [x] Some "special" JPA annotations (make a selection yourself)
+- @Enumerated
+
+#### Web-client
+- [x] One Servlet
+- [x] One Filter
+- [x] Framework: the choice is up to you
+- [x] Page flow
+- [x] Form & validation & business logic
+- [x] Web service clients
+- [x] One client for your own web services
+- [x] One SOAP client
+- [x] One client for the RESTFul service (Json or XML)
 
 
