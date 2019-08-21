@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/User.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/UserFacade.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/UserMessage.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/Uncountable.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/BankAccount.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/interceptor/SingletonSessionState.java</file>
+            <file>file:/C:/Users/Bartek/Documents/NetBeansProjects/NewsAppEE6/NewsApp-ejb/src/java/ejb/NewMessage.java</file>
+        </group>
     </open-files>
 </project-private>

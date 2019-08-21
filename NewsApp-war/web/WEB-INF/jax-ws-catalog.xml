@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/NewsApp-war/UserSoapWebService?wsdl" uri="wsdl/localhost_8080/NewsApp-war/UserSoapWebService.wsdl"/>
+    <system systemId="http://localhost:8080/NewsApp-war/UserSoapWebService?xsd=1" uri="wsdl/localhost_8080/NewsApp-war/UserSoapWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/NewsApp-war/ItemSoapWebService?wsdl" uri="wsdl/localhost_8080/NewsApp-war/ItemSoapWebService.wsdl"/>
+    <system systemId="http://localhost:8080/NewsApp-war/ItemSoapWebService?xsd=1" uri="wsdl/localhost_8080/NewsApp-war/ItemSoapWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/NewsApp-war/BasketSoapWebService?wsdl" uri="wsdl/localhost_8080/NewsApp-war/BasketSoapWebService.wsdl"/>
+    <system systemId="http://localhost:8080/NewsApp-war/BasketSoapWebService?xsd=1" uri="wsdl/localhost_8080/NewsApp-war/BasketSoapWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/NewsApp-war/BankSoapWebService?wsdl" uri="wsdl/localhost_8080/NewsApp-war/BankSoapWebService.wsdl"/>
+    <system systemId="http://localhost:8080/NewsApp-war/BankSoapWebService?xsd=1" uri="wsdl/localhost_8080/NewsApp-war/BankSoapWebService.xsd_1.xsd"/>
+</catalog>

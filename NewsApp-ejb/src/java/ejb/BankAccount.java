@@ -15,6 +15,8 @@ import javax.persistence.Id;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -22,6 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "banks")
+@XmlRootElement
 public class BankAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +65,7 @@ public class BankAccount implements Serializable {
         this.money = money;
     }
 
+    @XmlTransient
     public List<User> getListOfUsers() {
         return listOfUsers;
     }

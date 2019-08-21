@@ -15,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,6 +23,7 @@ import javax.persistence.Id;
  */
 @Entity
 @DiscriminatorValue("Countable")
+@XmlRootElement
 public class Countable extends Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

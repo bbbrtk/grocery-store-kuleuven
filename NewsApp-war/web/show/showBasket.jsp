@@ -213,8 +213,8 @@ and open the template in the editor.
                                             <%=((List) request.getAttribute("basketList")).get(i)%>
                                         </td>
                                         <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-primary">
-                                                <i class="btn-icon-only icon-ok">Remove</i>										
+                                            <a href="/NewsApp-war/web/basket/<%=((List) request.getAttribute("basketListId")).get(i)%>" class="btn btn-small btn-primary">
+                                                <i class="btn-icon-only icon-ok">Details</i>										
                                             </a>
                                         </td>
                                         <% }%>
