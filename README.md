@@ -1,6 +1,5 @@
 ## KU Leuven - Distributed Applications - Final Project
-#### Grocery Store 
-#### Bartosz Sobkowiak r0768717
+#### Grocery Store - Bartosz Sobkowiak r0768717
 
 
 ### System Requirements
@@ -32,20 +31,20 @@
 ### Project Expectations
 
 #### EJB
-- [x] At least one stateless 
-- [x] stateful EJB session bean
-- [x] At least one Singleton bean: 
-- [x] At least one interceptor
-- [x] At least one timer
-- [x] A MDB (Message Driven Bean) with a Message Queue (and some code that posts a message in the queue)
-- [x] A SOAP web service
-- [x] A RESTFul web service
+- [x] At least one stateless: **ejb.UserFacade and all Facades from ejb package**
+- [x] stateful EJB session bean: **ejb.session.ManagementSessionBean **
+- [x] At least one Singleton bean: **ejb.interceptor.SingletonSessionState**
+- [x] At least one interceptor: **ejb.interceptor.BeanInterceptor**
+- [x] At least one timer: **ejb.timer.UserLogoutTimer**
+- [x] A MDB (Message Driven Bean) with a Message Queue: **ejb.UserMessage, ejb.NewMessage - used in web package**
+- [x] A SOAP web service: **soap.UserSoapWebService and others from soap package**
+- [x] A RESTFul web service: **service.UserFacadeREST and rest from service package**
 
 #### JPA
-- [x] A few entity beans: **ejb.BankAccount, ejb.User, ejb.Basket, ejb.Item, ejb.Countable, ejb.Uncountable
-- [x] At leas one one-to-many: **User - Basket, Basket - Item
-- [x] At least one many-to-many relationship: **User - BankAccount
-- [x] Corresponding tables **USER_ACCOUNT - BANKS - USER_BANKACCOUNT 
+- [x] A few entity beans: **ejb.BankAccount, ejb.User, ejb.Basket, ejb.Item, ejb.Countable, ejb.Uncountable**
+- [x] At leas one one-to-many: **User - Basket, Basket - Item**
+- [x] At least one many-to-many relationship: **User - BankAccount**
+- [x] Corresponding tables **USER_ACCOUNT - BANKS - USER_BANKACCOUNT** 
 - [x] Some "special" JPA annotations (make a selection yourself)
   - @Enumerated
   - @GeneratedValue
@@ -56,13 +55,13 @@
   - etc...
 
 #### Web-client
-- [x] At least One Servlet: **web.msg.UserMsg and all from web.msg package , StartPage and others from web package
-- [x] One Filter: **ItemValidationFilter
-- [x] Framework: the choice is up to you: **Bootstrap-4.1 with HTML/CSS/JS/Jquery-1.11 support
-- [x] Page flow: **page flow available
-- [x] Form & validation & business logic **JavaScript validation and ItemValidationFilter
-- [x] One client for your own web services: **client available
-- [x] One SOAP: **soap.UserSoapWebService and others from soap package
-- [x] One client for the RESTFul service (Json or XML): **service.RestClient client , service.UserFacadeREST and rest from service package
+- [x] At least One Servlet: **web.msg.UserMsg and all from web.msg package , StartPage and others from web package**
+- [x] One Filter: **ItemValidationFilter**
+- [x] Framework: the choice is up to you: **Bootstrap-4.1 with HTML/CSS/JS/Jquery-1.11 support and JSP support**
+- [x] Page flow: **all in .add,login,settings,show,start folders in Web Pages directory**
+- [x] Form & validation & business logic **JavaScript validation and ItemValidationFilter**
+- [x] One client for your own web services: **client available**
+- [x] One SOAP client:**client available**
+- [x] One client for the RESTFul service (Json or XML): **service.RestClient**
 
 
