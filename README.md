@@ -32,7 +32,7 @@
 
 #### EJB
 - [x] At least one stateless: **ejb.UserFacade and all Facades from ejb package**
-- [x] stateful EJB session bean: **ejb.session.ManagementSessionBean **
+- [x] stateful EJB session bean: **ejb.session.ManagementSessionBean**
 - [x] At least one Singleton bean: **ejb.interceptor.SingletonSessionState**
 - [x] At least one interceptor: **ejb.interceptor.BeanInterceptor**
 - [x] At least one timer: **ejb.timer.UserLogoutTimer**
@@ -60,8 +60,8 @@
 - [x] Framework: the choice is up to you: **Bootstrap-4.1 with HTML/CSS/JS/Jquery-1.11 support and JSP support**
 - [x] Page flow: **all in .add,login,settings,show,start folders in Web Pages directory**
 - [x] Form & validation & business logic **JavaScript validation and ItemValidationFilter**
-- [x] One client for your own web services: **client available**
-- [x] One SOAP client:**client available**
+- [x] One client for your own web services: **client automatically available**
+- [x] One SOAP client: **client automatically available**
 - [x] One client for the RESTFul service (Json or XML): **service.RestClient**
 
 
