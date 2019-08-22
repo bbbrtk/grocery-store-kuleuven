@@ -28,6 +28,9 @@ The applications could be used to management and use of grocery store. Users can
 9. **Enjoy!**
 10. Depending on version of your browser, it may be necessery to refresh pages (F5) after click in some links or after redirections.
 
+### How does it work
+[Check the .pdf document with detailed descriptions and instructions](https://github.com/bbbrtk/grocery-store-kuleuven/blob/master/HowDoesItWork.pdf)
+
 ### Project Expectations
 
 #### EJB
