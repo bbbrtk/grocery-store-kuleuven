@@ -17,7 +17,7 @@ and open the template in the editor.
     <head>
         <title>Start</title>
         <link rel="stylesheet" type="text/css" href="/NewsApp-war/start/startcss.css">
-        <link rel="stylesheet" type="text/css" href="/NewsApp-war/login/logincss.css">
+        <link rel="stylesheet" type="text/css" href="/NewsApp-war/login/logincss-all.css">
         <script src="/NewsApp-war/start/startjs.js"></script> 
 
         <meta charset="UTF-8">

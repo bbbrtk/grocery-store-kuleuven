@@ -67,7 +67,26 @@ public class BuyItemMsg extends HttpServlet {
         if (name == null) {
             name = "";
         }
-        if (!name.equals("") && msb.getCurrentBasket()!=null) {
+        
+        if (msb.getCurrentBasket()==null){
+                    PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>BasketError</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p> [ChooseBasketException]</p>");
+            out.println("<p> Choose your basket first if you want to buy something!</p>");
+            out.println("<a href='/NewsApp-war/addBankOrBasket'>Return</a>");
+            out.println("<br><br>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
+        }
+        else if (!name.equals("") ) {
 
             List items = itemFacade.findAll();
             for (Iterator it = items.iterator(); it.hasNext();) {
@@ -80,7 +99,8 @@ public class BuyItemMsg extends HttpServlet {
                         Basket elem2 = (Basket) it2.next();
                         if (elem2.getName().equals(msb.getCurrentBasket().getName())) {
                             elem.setBasket(elem2);
-                            elem.setQuantity(elem.getQuantity()-1.0);
+                            double qu = elem.getQuantity() - 1;
+                            elem.setQuantity(qu);
 
                             itemFacade.edit(elem);
                             msb.storeBasket(elem2);
@@ -104,7 +124,7 @@ public class BuyItemMsg extends HttpServlet {
             out.println("<title>Error Message</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<p> [InputException handled]/p>");
+            out.println("<p> [InputException handled]</p>");
             out.println("<p> Empty or incorrect input</p>");
             out.println("<a href='/NewsApp-war/StartPage'>Return</a>");
             out.println("<br><br>");

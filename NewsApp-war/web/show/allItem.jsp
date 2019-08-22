@@ -17,7 +17,7 @@ and open the template in the editor.
     <head>
         <title>Start</title>
         <link rel="stylesheet" type="text/css" href="/NewsApp-war/start/startcss.css">
-        <link rel="stylesheet" type="text/css" href="/NewsApp-war/login/logincss.css">
+        <link rel="stylesheet" type="text/css" href="/NewsApp-war/login/logincss-all.css">
         <script src="/NewsApp-war/start/startjs.js"></script> 
 
         <meta charset="UTF-8">
@@ -192,7 +192,7 @@ and open the template in the editor.
             <div class="login-html">
                 <div class="span7">   
                     <div class="widget stacked widget-table action-table">
-                        <input id="signin" type="radio" name="tab" class="sign-in" checked><label for="signin" class="tab">My baskets</label>
+                        <input id="signin" type="radio" name="tab" class="sign-in" checked><label for="signin" class="tab">All available items</label>
                         <div class="widget-content">
                             <table class="table table-striped table-bordered" style="color: #fff">
                                 <thead>
